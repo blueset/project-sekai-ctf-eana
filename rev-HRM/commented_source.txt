@@ -1,0 +1,129 @@
+
+```commented source code
+# init values
+a = 0110 0110
+b = 0111 1001
+c = 0 # expect to be 0001 1111
+
+b = 0
+badd = 5
+comparator = 0
+ctr = 0
+ptr = 15 - 1  # char_ptr
+matching = 0
+
+input_loop:
+    # b = ptr * badd
+    copyfrom ptr
+    copyto a
+    bumpup a
+    begin_b_init_loop:
+        jumpz end_b_init_loop
+        copyfrom badd
+        add b
+        copyto b
+        bumpdn a
+        jump begin_b_init_loop
+    end_b_init_loop:
+
+    # a = input()
+    inbox
+    copyto a
+
+    # init bit counter
+    bumpdn ctr      # ctr = hand = -1
+    add ctr    # hand = -2
+    copyto ctr
+    add ctr    # hand = -4
+    copyto ctr
+    add ctr    # hand = -8
+    copyto ctr
+
+    bit_loop:  # loop until ctr == 0
+        # reset comparator
+        copyfrom comparator
+        sub comparator      # hand = 0
+        copyto comparator
+        bumpup comparator     # comparator == 1
+
+        # init i
+        copyfrom ctr  # ctr = -8, -7, ... 0
+        copyto i      # i = -8, -7, ... 0
+        bumpup i      # i -= 1
+
+        jumpz skip_doubling
+        setup_comparator:
+            copyfrom comparator
+            add comparator   # hand *= 2
+            copyto comparator
+            bumpup i
+        jumpn setup_comparator
+        skip_doubling:
+
+        # i == 0, comparator == 1 << (ctr - 1)
+
+        # if a >= comparator (aka a[ctr] == 1, aka a - comparator >= 0)
+        copyfrom a
+        sub comparator
+        jumpn comp_lt_a
+            copyfrom a
+            sub comparator
+            copyto a    # a -= comparator
+            # if b >= comparator (aka b[ctr] == 1,aka b - comparator >= 0)
+            copyfrom b
+            sub comparator
+            jumpn comp_lt_b_1
+                copyfrom b
+                sub comparator
+                copyto b    # b -= comparator
+                # same, do nothing
+                jump end_if
+            comp_lt_b_1:
+                # c += comparator
+                copyfrom c
+                add comparator
+                copyto c
+            jump end_if
+        comp_lt_a:
+            # if b >= comparator (aka b[ctr] == 1,aka b - comparator >= 0)
+            copyfrom b
+            sub comparator
+            jumpn end_if
+                # c += comparator
+                copyfrom b
+                sub comparator
+                copyto b    # b -= comparator
+                copyfrom c
+                add comparator
+                copyto c
+                # jump end_if
+            # else
+                # same, do nothing
+        end_if:
+        bumpup ctr
+        jumpn bit_loop
+
+    # end of bit loop
+
+    # check of c (aka a ^ b) == ptr
+    copyfrom c
+    sub [ptr]
+    jumpz match
+        copyfrom wrong
+        output
+        jump exit
+    match:
+
+    # now ctr == 0
+    # reset c
+    copyfrom ctr
+    copyto c
+
+    bumpdn ptr
+    jumpn correct
+    jump input_loop
+correct:
+    copyfrom correct
+    output
+exit:
+```
