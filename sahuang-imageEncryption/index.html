@@ -15,14 +15,16 @@
         }
     </script>
     <div class="container px-4 mx-auto text-center">
-        <h1 class="my-16 text-6xl font-bold text-center">Image encryption</h1>
+        <h1 class="my-16 text-6xl font-bold text-center">Secure Image Encryption</h1>
         <form id="form" method="post" action="/upload" enctype="multipart/form-data">
-            <label>Upload image</label>
-            <input type="file" required id="image" name="image" class="px-2 py-2 text-white rounded" accept=".png,image/png" />
+			<div class="mb-4">
+                <label for="image">Select image</label>
+                <input type="file" required id="image" name="image" class="px-2 py-2 text-white rounded" accept=".png,image/png" />
+            </div>
             <button
-            data-sitekey="6LeRZQYfAAAAAKCnifftBQGO3z5y8xhJzT73_Ggt" 
-            data-callback='onSubmit' 
-            data-action='sekai_ctf_image_encryption_upload' class="g-recaptcha px-4 py-2 rounded bg-cyan-700 hover:bg-cyan-600 disabled:bg-zinc-700 disabled:hover:bg-zinc-700">Upload</button>
+                data-sitekey="6LeRZQYfAAAAAKCnifftBQGO3z5y8xhJzT73_Ggt" 
+                data-callback='onSubmit' 
+                data-action='sekai_ctf_image_encryption_upload' class="g-recaptcha px-4 py-2 rounded bg-cyan-700 hover:bg-cyan-600 disabled:bg-zinc-700 disabled:hover:bg-zinc-700">Upload</button>
         </form>
     </div>
 </body>

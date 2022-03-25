@@ -1,11 +1,12 @@
 from io import BytesIO
 from PIL import Image
-from flask import Flask, request, url_for, render_template
+from flask import Flask, request, render_template
 import random
 import base64
 import requests
 
 app = Flask(__name__, template_folder="")
+app.config['MAX_CONTENT_LENGTH'] = 2 * 1000 * 1000
 FLAG_PATH = "flag.png"
 flag_img = Image.open(FLAG_PATH)
 RECAPTCHA_SECRET_KEY = "6LeRZQYfAAAAALfL7wbPk68fbC8gL3jRPfiFYYSd"
@@ -62,6 +63,8 @@ def upload():
         return "Invalid image", 403
     if im1.format != "PNG":
         return "Invalid image format", 403
+    if im1.size[0] > 500 or im1.size[1] > 500:
+        return "Image too large", 403
 
     key = random.randint(0, 0xffffffff)
     im1_encrypted = encrypt_img(im1, key)
