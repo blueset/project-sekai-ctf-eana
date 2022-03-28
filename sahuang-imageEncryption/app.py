@@ -63,7 +63,7 @@ def upload():
         return "Invalid image", 403
     if im1.format != "PNG":
         return "Invalid image format", 403
-    if im1.size[0] > 500 or im1.size[1] > 500:
+    if im1.size[0] > 512 or im1.size[1] > 512:
         return "Image too large", 403
 
     key = random.randint(0, 0xffffffff)

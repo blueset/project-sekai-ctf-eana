@@ -1,6 +1,9 @@
 # Random stuff Eana worked on for Project SEKAI CTF.
+> a.k.a. “today’s episode of ‘How to turn a CTF into an online puzzle game’”.
 
 Moving stuff from the team Discord server because it was a mess.
+
+In case they would need to use the author names anywhere, I would go with *pamLELcu*. This is a play of pronunciation of the Na’vi word *pamrelsiyu* [pam.ˈɾɛl.si.ju] which means “writer, author”.
 
 * encoding: [16seg](./encoding-16seg)
 * encoding: [fastHands](./encoding-fastHands)
