@@ -5,7 +5,6 @@ import random
 import asyncio
 import edge_tts
 
-app = web.Application()
 routes = web.RouteTableDef()
 
 loop = asyncio.get_event_loop()
@@ -85,7 +84,12 @@ async def echo(request):
     except Exception as e:
         return ws
 
-app.add_routes(routes)
+
+def init(argv):
+    app = web.Application()
+    app.add_routes(routes)
+    return app
 
 if __name__ == "__main__":
+    app = init(None)
     web.run_app(app)
