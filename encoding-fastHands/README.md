@@ -20,11 +20,11 @@ Matching the words against their respective dictionaries, we can get the followi
 > - and then the word can with capitalized N followed by an underscore
 > - after that comes uppercase U and underbar
 > - next is the word write but replace the letter i with number one
-> - type an ampersand and then the word type but change the last letter to three
+> - jot down an ampersand and then the word type but change the last letter to three
 > - finally close with a curly bracket
 > - is it all good?
 > - awesome!
 
-See attached for how to translate.
+See attached for how to translate. (`*` denotes a shorthand form)
 
 Flag: `SEKAI{How_fAst_caN_U_wr1te&typ3}`
