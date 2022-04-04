@@ -28,3 +28,7 @@ Matching the words against their respective dictionaries, we can get the followi
 See attached for how to translate. (`*` denotes a shorthand form)
 
 Flag: `SEKAI{How_fAst_caN_U_wr1te&typ3}`
+
+## Resources
+- [Plover dictionary (JSON)](https://github.com/openstenoproject/plover/blob/master/plover/assets/main.json)
+- [Gregg Shorthand Textbooks (Reddit, Internet Archive)](https://www.reddit.com/r/shorthand/wiki/gregg-modern-textbooks-online)
