@@ -13,15 +13,15 @@ Matching the words against their respective dictionaries, we can get the followi
 > - hi
 > - ready for the flag?
 > - yes of course
-> - it starts with S E K A I in all caps
-> - followed by an open curly bracket
-> - and the word how with a capitalized H followed by an underscore
-> - then write fast where the second letter is in uppercase after which is an underbar
-> - and then the word can with capitalized N followed by an underscore
-> - after that comes uppercase U and underbar
-> - next is the word write but replace the letter i with number one
-> - jot down an ampersand and then the word type but change the last letter to three
-> - finally close with a curly bracket
+> - it starts with **S E K A I in all caps**
+> - followed by an **open curly bracket**
+> - and the word **how with a capitalized H** followed by **an underscore**
+> - then write **fast where the second letter is in uppercase** after which is **an underbar**
+> - and then the word **can with capitalized N** followed by **an underscore**
+> - after that comes **uppercase U** and **underbar**
+> - next is the word **write but replace the letter i with number one**
+> - jot down **an ampersand** and then the word **type but change the last letter to three**
+> - finally close with a **curly bracket**
 > - is it all good?
 > - awesome!
 
