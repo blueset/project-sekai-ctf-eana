@@ -11,7 +11,7 @@ Players can either match the tracks manually if they want to, or it is also poss
 
 [dejavu]: https://github.com/worldveil/dejavu
 
-`SEKAI{v0caloId<3u}`
+`SEKAI{v0CaloId<3u}`
 
 > Vocaloid ❤️ U
 
