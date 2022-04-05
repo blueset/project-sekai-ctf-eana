@@ -5,7 +5,7 @@ Well, it’s just too usual to hide a flag in stegano, database, cipher, or serv
 
 The source code suggest that the music file was generated based on the content of `flag.txt`, and choosing MP3 files from the downloaded JSON.
 
-Thus, download the JSON and all MP3 files, then match each second of it against files to see which songs are included, then pick out the first character of each song’s name as the flag.
+Thus, download the JSON and all MP3 files, then match each segment of 3 seconds against downloaded files to see which songs are included, then matching the ID of each song to get the flag.
 
 Players can either match the tracks manually if they want to, or it is also possible to use tools like [dejavu] for automation.
 
