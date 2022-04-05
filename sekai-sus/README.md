@@ -17,3 +17,6 @@ Flag: `SEKAI{SbtnFmnW2HnYbdDkryunTkrrtims}`
 > **S**u**b**e**t**e**n**o **F**u**m**e**n** **W**a **2** **H**o**n** **Y**u**b**i**d**e **D**e**k**i**r**u**y**o**un**i **T**su**k**u**r**a**r**e**t**e**im**a**s**u.  
 > 全ての譜面は二本指でできるように作られています。  
 > All the charts are made to be playable with two fingers.
+
+## Extenral links
+* Editor used: [PaletteWorks](https://paletteworks.mkpo.li/)
