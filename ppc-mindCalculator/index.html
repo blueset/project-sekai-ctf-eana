@@ -33,7 +33,7 @@
         const answerField = document.getElementById('answer');
         const submit = document.getElementById('submit');
         const connClose = document.getElementById('conn_close');
-        const socket = new WebSocket('ws://' + location.host + '/echo');
+        const socket = new WebSocket((window.location.protocol === "https:" ? "wss://" : "ws://") + location.host + '/echo');
         socket.addEventListener("open", () => {
             start.disabled = false;
         });

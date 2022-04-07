@@ -2,11 +2,10 @@ import requests
 import random
 import subprocess
 
-tracks = requests.get("https://sekai-world.github.io/sekai-master-db-diff/musics.json").json()
 resources = requests.get("https://sekai-world.github.io/sekai-master-db-diff/musicVocals.json").json()
 
 def get_resource(mid):
-    return random.choice([i for i in resources if i["musicId"] == mid], key=lambda a: a["caption"])["assetbundleName"]
+    return random.choice([i for i in resources if i["musicId"] == mid])["assetbundleName"]
 
 def download(mid):
     resource = get_resource(mid)
