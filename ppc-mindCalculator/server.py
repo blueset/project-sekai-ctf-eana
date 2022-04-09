@@ -1,3 +1,4 @@
+from xml.dom import WrongDocumentErr
 import aiohttp
 from aiohttp import web
 import inflect
@@ -15,7 +16,7 @@ voices = [
     "en-CA-ClaraNeural",
     "en-IN-NeerjaNeural",
     "en-IE-EmilyNeural",
-    "en-NG-AbeoNeural",
+    # "en-NG-AbeoNeural",
     "en-PH-RosaNeural",
     "en-ZA-LeahNeural",
     "en-GB-SoniaNeural",
@@ -35,13 +36,14 @@ async def get_voice(words):
         raise
 
 def generate_number(number):
-    return infl.number_to_words(number).replace("minus", "negative").replace(",", "")
+    return infl.number_to_words(number).replace("minus", "negative").replace(",", "").replace("-", " ")
 
 def generate_equation():
-    count = 100
+    count = 10
     numbers = [random.randint(-9999, 9999) for _ in range(count)]
-    symbols = [1] + [random.choice([0, 1]) for _ in range(count - 1)]
+    symbols = [1] + [random.choice([-1, 1]) for _ in range(count - 1)]
     result = sum(i * j for i, j in zip(numbers, symbols))
+    print(*zip(numbers, symbols), sep="\n")
     equation = [generate_number(numbers[0])]
     for i in range(1, count):
         if symbols[i] == 1:
@@ -49,7 +51,7 @@ def generate_equation():
         else:
             equation.append(', minus')
         equation.append(generate_number(numbers[i]))
-    return f"What is {' '.join(equation)}?", result
+    return f"What is {' '.join(equation)}", result
 
 @routes.get("/")
 async def hello_world(request):
@@ -61,6 +63,7 @@ async def echo(request):
     await ws.prepare(request)
     try:
         counter = -1
+        wrong_ans = 0
         result = "start"
         async for msg in ws:
             if msg.type != aiohttp.WSMsgType.TEXT:
@@ -68,13 +71,18 @@ async def echo(request):
                 break
             input_txt = msg.data
             if str(input_txt) != str(result):
-                await ws.send_str("WRONG")
-                return ws
-            counter += 1
+                wrong_ans += 1
+                await ws.send_str(f"{counter}/100 correct, {wrong_ans}/20 wrong (+1)")
+                # return ws
+            else:
+                if wrong_ans >= 20:
+                    return ws
+                counter += 1
             if counter >= 100:
                 break
             eqn, result = generate_equation()
-            await ws.send_str(f"{counter}")
+            print(eqn, result)
+            await ws.send_str(f"{counter}/100 correct (+1), {wrong_ans}/20 wrong")
             async for data in get_voice(eqn):
                 await ws.send_bytes(data)
         with open("flag.txt", "r") as f:
