@@ -12,12 +12,12 @@ text = sys.stdin.read()
 #     print()
 
 bits = "".join(bin(ord(i))[2:].zfill(8) for i in text)
-bits = bits.ljust(len(bits) + (10 - (len(bits) % 10)) % 10, "0")
+# bits = bits.ljust(len(bits) + (10 - (len(bits) % 10)) % 10, "0")
 
 result = ""
-for i in range(0, len(bits), 10):
-    left = bits[i:i+5]
-    right = bits[i+5:i+10]
+for i in range(0, len(bits), 8):
+    left = bits[i:i+4]
+    right = bits[i+4:i+8]
     # print(left, right)
     lcolor = 30 if left[0] == "0" else 90
     lcolor += int(left[1:], 2)
