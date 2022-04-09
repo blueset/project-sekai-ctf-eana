@@ -7,6 +7,7 @@ In case they would need to use the author names anywhere, I would go with *pamLE
 
 * encoding: [16seg](./encoding-16seg)
 * encoding: [fastHands](./encoding-fastHands)
+* encoding: [matroshka](./encoding-matroshka)
 * encoding: [vaccination](./encoding-vaccination)
 * forensics: [brokenConverter](./forensics-brokenConverter)
 * forensics: [flagSans](./forensics-flagSans)
