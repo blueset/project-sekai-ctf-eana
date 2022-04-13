@@ -18,6 +18,7 @@ In case they would need to use the author names anywhere, I would go with *pamLE
 * ppc: [hyperlink](./ppc-hyperlink)
 * ppc: [mindCalculator](./ppc-mindCalculator)
 * rev: [HRM](./rev-HRM)
+* sekai: [iLoveThisWorld](./sekai-iLoveThisWorld)
 * sekai: [singIt](./sekai-singIt)
 * sekai: [sus](./sekai-sus)
 * web: [easyEval](./web-easyEval)
