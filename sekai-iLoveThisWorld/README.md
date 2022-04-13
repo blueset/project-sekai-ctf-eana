@@ -13,7 +13,11 @@ Overlapping the parameters, we can see the flag.
 
 ![Flag preview](./Params.png)
 
+(Blue: DYN, Green: CLE, Red: BRI)
+
 Flag: `SEKAI{SMONEZTMRISOURDREAMTDY}`
+
+> Someone’s tomorrow is our dream today.
 
 > キミを想う人の数だけ  
 > キミを創る未来がある  
