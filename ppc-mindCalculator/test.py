@@ -1,41 +1,31 @@
-#%%
 from websocket import create_connection
 import subprocess
-# from deepspeech import Model
 import numpy as np
 import wave
 import re
 from word2number import w2n
 
-from vosk import Model, KaldiRecognizer, SetLogLevel
-import sys
-import os
+from vosk import Model, KaldiRecognizer
+import azure.cognitiveservices.speech as speechsdk
 import wave
 import json
+import os
 
-# %%
-# ds = Model(r"deepspeech-0.9.3-models.pbmm")
-# ds.enableExternalScorer(r"deepspeech-0.9.3-models.scorer")
+
 keywords = (
     "what is negative plus minus and "
     "twenty thirty forty fifty sixty seventy eighty ninety hundred thousand "
     "eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen "
     "one two three four five six seven eight nine ten "
 ).split()
-# for k in keywords:
-#     ds.addHotWord(k, 2.5)
 
-SetLogLevel(0)
-# if not os.path.exists("model"):
-#     print ("Please download the model from https://alphacephei.com/vosk/models and unpack as 'model' in the current folder.")
-#     exit (1)
+# Setup Vosk
 model = Model("model")
 
-def recog(path):
+def recog_vosk(path):
     wf = wave.open(path, "rb")
     rec = KaldiRecognizer(model, wf.getframerate(), f'["{" ".join(keywords)}", "[unk]"]')
     rec.SetWords(True)
-    # rec.SetPartialWords(True)
     if wf.getnchannels() != 1 or wf.getsampwidth() != 2 or wf.getcomptype() != "NONE":
         print ("Audio file must be WAV format mono PCM.")
         exit (1)
@@ -48,31 +38,38 @@ def recog(path):
             break
         if rec.AcceptWaveform(data):
             resjson = rec.Result()
-            print("RESU", resjson)
             res += " " + json.loads(resjson)["text"]
-        # else:
-            # print("PART", rec.PartialResult())
 
-    # print("FINAL")
     resjson = rec.Result()
-    print(resjson)
     res += " " + json.loads(resjson)["text"]
     res = res.replace("[unk] ", "")
     res = re.sub(r"(\w+) \1 ", r"\1 ", res)
-    # print(repr(res))
-    return res
+    return res.strip()
 
-# %%
+
+def recog_azure(path):
+    speech_config = speechsdk.SpeechConfig(subscription=os.environ["AZURE_SPEECH_KEY"], region=os.environ["REGION"])
+    audio_input = speechsdk.AudioConfig(filename=path)
+    speech_config.output_format = speechsdk.OutputFormat.Detailed
+    speech_recognizer = speechsdk.SpeechRecognizer(
+        speech_config=speech_config, audio_config=audio_input,
+        language="en-US")
+    phrase_list_grammar = speechsdk.PhraseListGrammar.from_recognizer(speech_recognizer)
+    for w in keywords:
+        phrase_list_grammar.addPhrase(w)
+
+    answers = []
+    while True:
+        result = speech_recognizer.recognize_once()
+        if result.reason == speechsdk.ResultReason.NoMatch:
+            break
+        resultjson = json.loads(result.json)
+        answers.append(resultjson["NBest"][0]["Lexical"])
+    return " ".join(answers)
+
 def calculate():
-    # fin = wave.open(r"a.wav", 'rb')
-    # fs_orig = fin.getframerate()
-    # audio = np.frombuffer(fin.readframes(fin.getnframes()), np.int16)
-    # fin.close()
-    # result = ds.stt(audio).strip()
-    result = recog(r"a.wav").strip()
-
-    print("heard =", repr(result))
-    print("non-keywords =", *(i for i in result.split() if i not in keywords))
+    result = recog_vosk(r"a.wav").strip()
+    # result = recog_azure(r"a.wav").strip()
 
     ws = re.findall(r"(what is|plus|minus) (negative )?((?:(?:" + "|".join(i+' ' for i in keywords[5:]) + r"))+)", result + " ")
 
@@ -94,34 +91,26 @@ def calculate():
         return 0
     return calculated
 
-#%%
-# c = calculate()
-# exit(0)
-
-
-ws = create_connection("wss://mindcalculator.projectsekaictfdemo.1a23.studio/echo")
-# ws = create_connection("ws://127.0.0.1:8080/echo")
-ws.send("start")
-while True:
-    data = b""
-    prompt = "0"
+if __name__ == "__main__":
+    ws = create_connection("ws://127.0.0.1:8080/echo")
+    ws.send("start")
     while True:
-        d = ws.recv()
-        if type(d) == str:
-            print("PROMPT:", d)
-            prompt = d
-            # if d:
-            #     print("HALT")
-            #     exit(0)
-            continue
-        if not d:
-            break
-        data += d
+        data = b""
+        prompt = "0"
+        while True:
+            d = ws.recv()
+            if type(d) == str:
+                print("PROMPT:", d)
+                prompt = d
+                continue
+            if not d:
+                break
+            data += d
 
-    # %%
-    with open(r"a.mp3", "wb") as f:
-        f.write(data)
-    #%%
-    subprocess.run(["ffmpeg", "-i", r"a.mp3", "-acodec", "pcm_s16le", "-ac", "1", "-ar", "16000", "-y", r"a.wav"])
-    c = calculate()
-    ws.send(str(c))
+
+        with open(r"a.mp3", "wb") as f:
+            f.write(data)
+
+        subprocess.run(["ffmpeg", "-i", r"a.mp3", "-acodec", "pcm_s16le", "-ac", "1", "-ar", "16000", "-af", "silenceremove=1:0:-50dB", "-y", r"a.wav"])
+        c = calculate()
+        ws.send(str(c))

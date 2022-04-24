@@ -1,4 +1,3 @@
-from xml.dom import WrongDocumentErr
 import aiohttp
 from aiohttp import web
 import inflect
@@ -22,7 +21,7 @@ voices = [
     "en-GB-SoniaNeural",
     "en-US-AriaNeural",
     "en-US-GuyNeural",
-    "en-US-JennyNeural",
+    # "en-US-JennyNeural",
 ]
 
 async def get_voice(words):
@@ -64,8 +63,11 @@ async def echo(request):
     try:
         counter = -1
         wrong_ans = 0
+        timeout = None
         result = "start"
-        async for msg in ws:
+        while True:
+            msg = await msg.receive(timeout=timeout)
+            timeout = 30
             if msg.type != aiohttp.WSMsgType.TEXT:
                 await ws.send_str("ERR")
                 break
