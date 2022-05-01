@@ -1,6 +1,6 @@
-# flag Sans
+# flag Mono
 
-When writing the assignment, � used a font called **flag Sans**. Despite looking just like a normal monospaced font, it claimed itself to be **stylish** in a various of ways. Maybe there’s something special about it, � thought.
+When writing the assignment, � used a font called **flag Mono**. Despite looking just like a normal monospaced font, it claimed itself to be **stylish** in a various of ways. Perhaps there are something special about it, � thought.
 
 ## Writeup
 Extract the font file from the XPS document. (method can be found on Wikipedia)
