@@ -1,6 +1,6 @@
 # Fast hands
 
-Someday in the SEKAI Public Library, you saw two guys talking to each other at the desk across the corridor. They didn’t speak a word, but their hands was just moving so fast. You were so curious what’s going on. After they’ve left, you found this piece of paper on the desk.
+Someday in the SEKAI Public Library, you saw two guys talking to each other at the desk across the corridor. They didn’t speak a word, but their hands were just moving so fast. You were so curious what’s going on. After they’ve left, you found this piece of paper on the desk.
 
 Can you figure out what’s going on?
 
