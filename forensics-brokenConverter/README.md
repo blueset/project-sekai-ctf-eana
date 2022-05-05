@@ -12,7 +12,7 @@ Method 1: open the document, copy the text, and manually match up each letter wi
 Method 2: Extract the font from the document (method can be found on Wikipedia), open it and find the flag.
 https://en.wikipedia.org/wiki/ODTTF
 
-<code>f\@g:<u>SEKAI{sCR4MBLeD_a5ci1-FONT+GlYPHZ,W3|!.d0n&}</u>"#$%'()*/26789;&lt;=&gt;?JQUVX[]^`bhjkmopqrtuvwxyz~</code>
+<code>f&#92;@g:<u>SEKAI{sCR4MBLeD_a5ci1-FONT+GlYPHZ,W3|!.d0n&}</u>"#$%'()*/26789;&lt;=&gt;?JQUVX[]^`bhjkmopqrtuvwxyz~</code>
 
 ![Comparing ASCII with the font’s output](screenshot.png)
 
