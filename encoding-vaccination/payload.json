@@ -1,0 +1,130 @@
+{
+ "iss": "https://smarthealthcard.sekai.team/v1/issuer",
+ "nbf": 1630850729,
+ "vc": {
+  "type": [
+   "https://smarthealth.cards#covid19",
+   "https://smarthealth.cards#immunization",
+   "https://smarthealth.cards#health-card"
+  ],
+  "credentialSubject": {
+   "fhirVersion": "4.0.1",
+   "fhirBundle": {
+    "resourceType": "Bundle",
+    "type": "collection",
+    "entry": [
+     {
+      "fullUrl": "resource:0",
+      "resource": {
+       "resourceType": "Patient",
+       "name": [
+        {
+         "family": "CTF",
+         "given": [
+          "Project",
+          "SEKAI"
+         ]
+        }
+       ],
+       "birthDate": "2020-09-30",
+       "contact": [
+        {
+         "name": {
+          "text": "flag"
+         },
+         "telecom": [
+          {
+           "system": "url",
+           "value": "data:text/html;base64,PGF1ZGlvIHNyYz0iaHR0cHM6Ly9tYXRyeW9zaGthLnNla2FpLnRlYW0vOGQ3ODk0MTRhN2M1OGI1ZjU4N2Y4YTA1MGI4ZDc4OGUud2F2IiBjb250cm9scz4="
+          }
+         ]
+        }
+       ]
+      }
+     },
+     {
+      "fullUrl": "resource:1",
+      "resource": {
+       "resourceType": "Immunization",
+       "status": "completed",
+       "vaccineCode": {
+        "coding": [
+         {
+          "system": "http://hl7.org/fhir/sid/cvx",
+          "code": "207"
+         }
+        ]
+       },
+       "patient": {
+        "reference": "resource:0"
+       },
+       "occurrenceDateTime": "2021-01-01",
+       "lotNumber": "CV01",
+       "performer": [
+        {
+         "actor": {
+          "display": "Crypton F.M.Inc."
+         }
+        }
+       ]
+      }
+     },
+     {
+      "fullUrl": "resource:2",
+      "resource": {
+       "resourceType": "Immunization",
+       "status": "completed",
+       "vaccineCode": {
+        "coding": [
+         {
+          "system": "http://hl7.org/fhir/sid/cvx",
+          "code": "207"
+         }
+        ]
+       },
+       "patient": {
+        "reference": "resource:0"
+       },
+       "occurrenceDateTime": "2021-06-01",
+       "lotNumber": "SF02",
+       "performer": [
+        {
+         "actor": {
+          "display": "Internet Inc."
+         }
+        }
+       ]
+      }
+     },
+     {
+      "fullUrl": "resource:3",
+      "resource": {
+       "resourceType": "Immunization",
+       "status": "completed",
+       "vaccineCode": {
+        "coding": [
+         {
+          "system": "http://hl7.org/fhir/sid/cvx",
+          "code": "207"
+         }
+        ]
+       },
+       "patient": {
+        "reference": "resource:0"
+       },
+       "occurrenceDateTime": "2022-01-01",
+       "lotNumber": "VY2V3",
+       "performer": [
+        {
+         "actor": {
+          "display": "Yamaha Co."
+         }
+        }
+       ]
+      }
+     }
+    ]
+   }
+  }
+ }
+}

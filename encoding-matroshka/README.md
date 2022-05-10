@@ -1,31 +1,13 @@
-Category: Encoding
+# Layers
+| Name | Target |
+| ---- | ------ |
+| Matroshka | (Starting point) |
+| iPNG, Vaccination | `https://matryoshka.sekai.team/-qLf-Aoaur8ZVqK4aFngYg.png` |
+| Noisy pair | `https://matryoshka.sekai.team/8d789414a7c58b5f587f8a050b8d788e.wav` |
 
-***(Title to be determined)***
+# Flag
 
-One extra bit will double the 8 colors you already have, but ain’t these new colors too similar to the old ones?
+`SEKAI{KandoRyoko5Five2Two4Four}`
 
-Hint: `\033[0m`
-
-## Explanation
-
-```
-Matte nannte itte matte matte
-↓ (ASCII)
-01001101 01100001 01110100 01110100 01100101 00100000 01101110 01100001 01101110 01101110 01110100 01100101 00100000 01101001 01110100 01110100 01100101 00100000 01101101 01100001 01110100 01110100 01100101 00100000 01101101 01100001 01110100 01110100 01100101 00001010
-
-
-FG     BG
-____   ____
-0100   1101
-^~~~~  ^~~~~
-|Color |Color
-Dark   Bright
-34     105
-Blue   Bright Magenta
-```
-
-`SEKAI{tattahitorininarumaeni}`
-
-> 待ってなんて言って待って待って  
-> たった一人になる前に  
-> — マトリョシカ / ハチ
+> 感度良好 524  
+>       — マトリョシカ / ハチ
