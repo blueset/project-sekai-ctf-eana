@@ -10,7 +10,7 @@ In case they would need to use the author names anywhere, I would go with *pamLE
 * encoding: [matroshka](./encoding-matroshka)
 * encoding: [vaccination](./encoding-vaccination)
 * forensics: [brokenConverter](./forensics-brokenConverter)
-* forensics: [flagSans](./forensics-flagSans)
+* forensics: [flagMono](./forensics-flagMono)
 * forensics: [whatistheflag](./forensics-whatistheflag)
 * misc: [iPNG](./misc-iPNG)
 * misc: [noisyPair](./misc-noisyPair)
