@@ -6,7 +6,7 @@ No worries, there are plenty of other free tools you can use. How about — let�
 Flag format (Regex): `SEKAI\{[A-Z0-9]+\}`
 
 ## Writeup
-As hinted in the question statement, the flag is sang out in the file. The file is a project file of Synthesizer V, which is a cross-platform singing synthesizer software that comes with a free version. Opening the file, it shows a JSON file that shows all the configurations of the track.
+As hinted in the question statement, the flag is sang out in the file. The file is a project file of [Synthesizer V], which is a cross-platform singing synthesizer software that comes with a free version. Opening the file, it shows a JSON file that shows all the configurations of the track.
 
 Inspecting the lyrics, we can see this line below, which is obviously not the flag as it does not match the flag format.
 
@@ -26,6 +26,7 @@ Flag: `SEKAI{SM1ZFARAWAYTMRISTHESEQUEL2OURDREAMTDY}`
 
 > Someone’s faraway tomorrow is the sequel to our dream today.
 
+[Synthesizer V]: https://dreamtonics.com/en/synthesizerv/
 [ARPABET]: https://en.wikipedia.org/wiki/ARPABET
 
 # I love this world
