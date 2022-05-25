@@ -39,12 +39,12 @@ Verified tools:
     segments = {i: calculate_fingerprints(i) for i in glob.glob("segments/*.mp3")}
     heads = {i: calculate_fingerprints(i) for i in glob.glob("heads/*.mp3")}
     for i, ico in segments.items():
-    best = (0, None)
-    for j, jco in heads.items():
-        corr = correlation(ico, jco)
-        if corr > best[0]:
-            best = (corr, j)
-    print(i, best[1])
+      best = (0, None)
+      for j, jco in heads.items():
+          corr = correlation(ico, jco)
+          if corr > best[0]:
+              best = (corr, j)
+      print(i, best[1])
     ```
 * https://github.com/d4r3topk/comparing-audio-files-python [FAILED]  
   Broken code?

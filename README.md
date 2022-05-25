@@ -27,6 +27,7 @@ In case they would need to use the author names anywhere, I would go with *pamLE
 ## Stuff I worked with other people
 
 * [sahuang-imageEncryption](./sahuang-imageEncryption)
+* [sahuang-electricBox](./sahuang-electricBox)
 
 ## Stuff I did during playtest
 
