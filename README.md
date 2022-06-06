@@ -18,6 +18,7 @@ In case they would need to use the author names anywhere, I would go with *pamLE
 * misc: [tz](./misc-tz)
 * ppc: [hyperlink](./ppc-hyperlink)
 * ppc: [mindCalculator](./ppc-mindCalculator)
+* ppc: [ktane](./ppc-ktane)
 * rev: [HRM](./rev-HRM)
 * sekai: [iLoveThisWorld](./sekai-iLoveThisWorld)
 * sekai: [singIt](./sekai-singIt) (Vocaloid Heardle)
