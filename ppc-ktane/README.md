@@ -6,8 +6,8 @@
 _[ 1 week later... ]_
 
 – Hey Miku, how’s the porting going?  
-– I just finished it today, wanna take a look?
-– Sure, which console did you port it to?
+– I just finished it today, wanna take a look?  
+– Sure, which console did you port it to?  
 – Huh...? What do you mean “which console”?
 
 `stty -echo -icanon && nc 127.0.0.1 58263`
