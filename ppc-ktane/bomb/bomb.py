@@ -90,7 +90,6 @@ class Countdown(Module):
         left = l + (self.w - len(number[0])) // 2
         for i in range(len(number)):
             win.addstr(top + i, left, number[i], Colors.Red)
-        # win.addstr(t + 2, l, f"{self.count:03}, {len(number)}, {len(number[0])}", Colors.Blue)
         self.count -= 1
         if self.count == 0:
             self.failed = True
@@ -133,10 +132,8 @@ class Keypad(Module):
             win.addstr(t + 7 + y * h, l + x * w, "└─────────┘", Colors.Yellow)
             if self.is_pressed[i]:
                 win.addstr(t + 3 + y * h, l + x * w + 5, "O", Colors.Green)
-                # win.addstr(t + 3 + y * h, l + x * w + 5, f"{self.order[i]}", Colors.Green)
 
     def click(self, t: int, l: int, bstd: int) -> bool:
-        # logging.debug(f"KEYPAD: {t}, {l}, {bstd}, {self.solved=}")
         if self.solved: return True
         if bstd == 2: return True  # ignore mouse down
         pressed = None
@@ -437,7 +434,6 @@ class Button(Module):
             (t in (3, 11) and 4 <= l <= 4 + 12) or \
             (t in (4, 10) and 3 <= l <= 3 + 14) or \
             (5 <= t <= 9 and 2 <= l <= 2 + 16):
-            # logging.info(f"Button: Signal received {bstd}")
             pressed = bstd != 1
             released = bstd != 2
             if pressed and self.light_color is None:
@@ -468,17 +464,13 @@ class Button(Module):
         count = self.bomb.countdown.count
         tick = f"{count}{count-1}{count+1}"
         if self.light_color is None:
-            # logging.info(f"Button: light color not found")
             return True
         elif self.light_color == Colors.Blue:
             self.solved = "4" in tick
-            # logging.info(f"Button: expecting 4, tick: {tick}")
         elif self.light_color == Colors.Yellow:
             self.solved = "5" in tick
-            # logging.info(f"Button: expecting 5, tick: {tick}")
         else:
             self.solved = "1" in tick
-            # logging.info(f"Button: expecting 1, tick: {tick}")
         return self.solved
 
 class Password(Module):
@@ -671,19 +663,15 @@ class Bomb:
 
     def tick(self, win: curses.window) -> Optional[bool]:
         if any(i.failed for i in self.bomb_modules):
-            # logging.info(f"Failed in: {TIME_LIMIT - self.countdown.count}")
             return False
 
         if all(i.solved in (True, None) for i in self.bomb_modules):
-            # logging.info(f"Solved in: {TIME_LIMIT - self.countdown.count}")
             return True
 
         ch = win.getch()
         m0, mx, my, mz, bstd = 0, 0, 0, 0, 0
         if ch == curses.KEY_MOUSE:
             m0, mx, my, mz, bstd = curses.getmouse()
-            # if bstd == 268435456:
-                # logging.debug(f"mouse: {m0}, {mx}, {my}, {mz}, {bstd}")
             if bstd in (1, 4) and 38 <= mx <= 42 and 1 <= my <= 2: # up
                 self.face = self.FACE_TRANSITIONS[self.face][0]
             elif bstd in (1, 4) and 38 <= mx <= 42 and 36 <= my <= 37: # down
@@ -700,19 +688,12 @@ class Bomb:
                             self.modules.front[mi][mj] is not None:
                         t = my - self.MODULE_COORDS[mi][mj][0]
                         l = mx - self.MODULE_COORDS[mi][mj][1]
-                        # win.addstr(2, 0, f"[Click mod: {mi}, {mj}, {t}, {l}, {bstd}]")
                         if self.modules.front[mi][mj].click(t, l, bstd) == False:
-                            # logging.info(f"Failed in: {TIME_LIMIT - self.countdown.count} at {self.modules.front[mi][mj].name}")
                             return False
         elif ch == ord("q"):
             return False
 
         self.render(win)
-
-        # if ch == curses.KEY_MOUSE:
-        #     win.addstr(1, 0, f"[Mouse: {m0}, {mx}, {my}, {mz}, {bstd}]")
-        # elif ch != -1:
-        #     win.addstr(2, 0, f"[Key: {ch}]")
 
     def render(self, win: curses.window) -> None:
         win.erase()

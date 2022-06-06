@@ -1,7 +1,6 @@
 import curses
 import bomb
 import time
-import logging
 
 def print_center_row(win: curses.window, row: int, text: str):
     cols = (80 - len(text)) // 2
@@ -15,16 +14,6 @@ def print_center_screen(win: curses.window, text: str):
         if i:
             print_center_row(win, starting_row + idx, i)
 
-# class Keypad:
-#     columns = [
-#         "ϘѦƛϞѬϗϿ",
-#         "ӬϘϿҨ☆ϗ¿",
-#         "©ѼҨҖԆƛ☆",
-#         "б¶ѢѬҖ¿ټ",
-#         "ΨټѢϾ¶Ѯ★",
-#         "бӬ҂æΨҊΩ",
-#     ]
-
 def main(win: curses.window):
     game = bomb.Bomb()
 
@@ -36,14 +25,9 @@ def main(win: curses.window):
     curses.init_pair(5, curses.COLOR_GREEN, curses.COLOR_BLACK)
     curses.init_pair(6, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
-    rows, cols = win.getmaxyx()
-    # print(rows, cols)
     curses.resize_term(41, 81)
-    # win.resize(41, 81)
     win.clear()
     win.keypad(1)
-    # win.addstr(0, 0, "0123456789" * 8)
-    # win.addstr(1, 0, "".join(f"{i}---------" for i in range(8)))
     print_center_screen(win,
         "Verification Code: 241.\n\n"
         "This screen is for your eyes only.\n\n"
@@ -54,18 +38,13 @@ def main(win: curses.window):
         "Windows Terminal, PuTTY\n\n\n"
         "Press any key to start..."
     )
-    # for i in range(39): win.addstr(i, 79, "|")
-    # win.addstr(39, 78, "|")
     win.refresh()
     win.getch()
 
-    # Start catching mouse events
     win.nodelay(1)
     curses.mousemask(curses.REPORT_MOUSE_POSITION | curses.ALL_MOUSE_EVENTS)
     win.clear()
 
-    # Start game loop
-    # game.render(win)
     outcome = None
     while outcome is None:
         last_tick = time.time_ns()
@@ -73,13 +52,9 @@ def main(win: curses.window):
         delay = 100 - (time.time_ns() - last_tick) // 1000000
         curses.napms(delay)
 
-    # win.getch()
-    # Stop catching mouse events
     win.clear()
     win.nodelay(0)
     curses.mousemask(0)
-    # Render end screen
-    # Frame
     win.addstr( 4, 0, "─" * 16 + "┬" + "─" * 50 + "┬──┐", bomb.Colors.Blue)
     win.addstr(34, 0, "─" * 16 + "┴" + "─" * 50 + "┴──┘", bomb.Colors.Blue)
     for i in range(5, 34):

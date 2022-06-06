@@ -132,7 +132,6 @@ async function main() {
     const term = new Terminal({cols: 81, rows: 41});
     term.writeAsync = promisify(term.write);
 
-    // var data = fs.readFileSync("banner.txt").toString();
     var data = fs.readFileSync("../bomb/stdout.txt").toString();
     var segments = data.split(/(?=\x1b)/);
     for (var segment of segments) {
@@ -156,18 +155,12 @@ async function clientMain() {
     });
     client.on("data", async (data) => {
         var dataStr = data.toString();
-        // console.log("Start on data", JSON.stringify(dataStr));
-        // await processLine(term, dataStr);
         await processLine(term, data);
         if (dataStr.match(/Press any key to start/g)) {
             client.write("a");
         } else if (term.buffer.active.getLine(38).translateToString().match(/Facing: Front/g)) {
-            // client.write(click(14, 14));
-            // console.log("Sent click")
             processFront(term);
-            // console.log(GameState);
             if (!GameState.checkedSides) {
-                // console.log("Sent flip up 1");
                 client.write(click(40, 2));
             } else if (GameState.modules.button !== undefined && !GameState.modules.button.solved) {
                 // Solve button
@@ -190,17 +183,12 @@ async function clientMain() {
             }
         } else if (dataStr.match(/Top/g)) {
             processSide(term);
-            // console.log(GameState);
-            // console.log("Sent flip up 2");
             client.write(click(40, 2));
         } else if (dataStr.match(/Back/g)) {
-            // console.log("Sent flip up 3");
             client.write(click(39, 2));
         } else if (dataStr.match(/ottom/g)) {
             processSide(term);
-            // console.log("Sent flip up 4");
             GameState.checkedSides = true;
-            // console.log(GameState);
             client.write(click(41, 2));
         } else if (term.buffer.active.getLine(37).translateToString().match(/Press any key to exit/g)) {
             printScreen(term);
@@ -214,5 +202,4 @@ async function clientMain() {
     });
 }
 
-// main();
 clientMain();

@@ -1,4 +1,3 @@
-const { countBy } = require("lodash");
 const _ = require("lodash");
 const BLACK = 0;
 const RED = 1;
@@ -34,8 +33,6 @@ function up(x, y) {
 }
 
 function click(x, y) {
-    // var coord = String.fromCharCode(0x21 + x) + String.fromCharCode(0x21 + y);
-    // return `\x1b[M ${coord}\x1b[M#${coord}`;
     return down(x, y) + up(x, y);
 }
 
@@ -56,39 +53,22 @@ async function solveWires(term, pClient, GameState) {
     console.log(`wires colors: ${wColors}; idxs: ${wIdxs}`);
     var cutWire = -1;
     if (wColors.length === 3) {
-        // if not counts[Colors.Red]: cut_wire = wire_idxs[1]
-        // elif wires[-1] == Colors.White: cut_wire = wire_idxs[2]
-        // elif counts[Colors.Blue] > 1: cut_wire = list_rindex(self.wires, Colors.Blue)
-        // else: cut_wire = wire_idxs[2]
         if (!counts[RED]) cutWire = wIdxs[1];
         else if (wColors[wColors.length - 1] === WHITE) cutWire = wIdxs[2];
         else if (counts[BLUE] > 1) cutWire = wIdxs[wColors.lastIndexOf(BLUE)];
         else cutWire = wIdxs[2];
     } else if (wColors.length === 4) {
-        // if counts[Colors.Red] > 1 and not bomb.serial_is_even: cut_wire = list_rindex(self.wires, Colors.Red)
-        // elif self.wires[wire_idxs[3]] == Colors.Yellow and not counts[Colors.Red]: cut_wire = wire_idxs[0]
-        // elif counts[Colors.Blue] == 1: cut_wire = wire_idxs[0]
-        // elif counts[Colors.Yellow] > 1: cut_wire = wire_idxs[3]
-        // else: cut_wire = wire_idxs[1]
         if (counts[RED] > 1 && GameState.serialIsOdd) cutWire = wIdxs[wColors.lastIndexOf(RED)];
         else if (wColors[3] === YELLOW && !counts[RED]) cutWire = wIdxs[0];
         else if (counts[BLUE] === 1) cutWire = wIdxs[0];
         else if (counts[YELLOW] > 1) cutWire = wIdxs[3];
         else cutWire = wIdxs[1];
     } else if (wColors.length === 5) {
-        // if self.wires[wire_idxs[4]] == Colors.Black and not bomb.serial_is_even: cut_wire = wire_idxs[3]
-        // elif counts[Colors.Red] == 1 and counts[Colors.Yellow] > 1: cut_wire = wire_idxs[0]
-        // elif not counts[Colors.Black]: cut_wire = wire_idxs[1]
-        // else: cut_wire = wire_idxs[0]
         if (wColors[4] === BLACK && GameState.serialIsOdd) cutWire = wIdxs[3];
         else if (counts[RED] === 1 && counts[YELLOW] > 1) cutWire = wIdxs[0];
         else if (!counts[BLACK]) cutWire = wIdxs[1];
         else cutWire = wIdxs[0];
     } else if (wColors.length === 6) {
-        // if not counts[Colors.Yellow] and not bomb.serial_is_even: cut_wire = wire_idxs[2]
-        // elif counts[Colors.Yellow] == 1 and counts[Colors.White] > 1: cut_wire = wire_idxs[3]
-        // elif not counts[Colors.Red]: cut_wire = wire_idxs[5]
-        // else: cut_wire = wire_idxs[3]
         if (!counts[YELLOW] && GameState.serialIsOdd) cutWire = wIdxs[2];
         else if (counts[YELLOW] === 1 && counts[WHITE] > 1) cutWire = wIdxs[3];
         else if (!counts[RED]) cutWire = wIdxs[5];
@@ -146,8 +126,6 @@ function solveKeypad(term, client, GameState) {
             .map(x => x[1]);
 
         console.log(`keys: ${keypadState.letters}, row: ${row}`);
-        // console.log(`keys1: ${JSON.stringify(keypadState.letters.map((l, idx) => [row.indexOf(l), idx]))}`);
-        // console.log(`keys2: ${JSON.stringify(keypadState.letters.map((l, idx) => [row.indexOf(l), idx]).sort((a, b) => a[0] - b[0]))}`);
         keypadState.parsed = true;
     }
     if (keypadState.current < keypadState.order.length) {
@@ -160,7 +138,6 @@ function solveKeypad(term, client, GameState) {
         var data = click(coorod[1], coorod[0]);
         client.write(data);
         console.log(`Current: ${keypadState.current}, order: ${keypadState.order}, Sent: ${JSON.stringify(data)}`);
-        // keypadState.current++;
     }
 }
 
