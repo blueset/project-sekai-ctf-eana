@@ -18,14 +18,12 @@ RUN mkdir /home/ctf/bin && \
     cp /bin/ls /home/ctf/bin && \
     cp /bin/cat /home/ctf/bin
 
-# COPY ./ctf.xinetd /etc/xinetd.d/ctf
 COPY ./bomb .
 RUN chmod +x /home/ctf/start.sh && \
     chown -R root:ctf /home/ctf && \
     chmod -R 750 /home/ctf
 
-# ENV TERM=xterm-256color
-# ENV TERM=xterm
+ENV TERM=xterm
 CMD ["/home/ctf/start.sh"]
 
 EXPOSE 9999
