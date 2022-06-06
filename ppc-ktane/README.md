@@ -15,7 +15,7 @@ _[ 1 week later... ]_
 ## Hints
 
 * Only “Keypad”, “Who’s on first”, “Memory”, “Wires”, “Button”, and “Password” modules are ported. No other module will appear on the bomb.
-* No modules or other components will appear on the back, left and right sides of the bomb. Serial number, indicators, and batteries will only appear on either the top or the bottom sides of the bomb.
+* No modules or other components will appear on the back, left and right sides of the bomb. Serial number, indicators, and batteries will only appear on the top and bottom sides of the bomb.
 
 ## Writeup
 

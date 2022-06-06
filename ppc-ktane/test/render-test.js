@@ -146,9 +146,10 @@ async function clientMain() {
     term.writeAsync = promisify(term.write);
 
     await pClient.connect({
-        // host: "20.124.204.46",
-        host: "127.0.0.1",
-        port: 58263,
+        host: "20.124.204.46",
+        // host: "127.0.0.1",
+        // port: 58263,
+        port: 9582,
         onread: {
             buffer: Buffer.alloc(16 * 1024),
         }
