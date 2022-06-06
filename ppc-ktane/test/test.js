@@ -33,12 +33,7 @@ function printScreen(term) {
         var line = buffer.getLine(i);
         var row = line !== undefined ? line.translateToString() : "undefined";
         var rid = i.toString().padStart(3, " ");
-        var tail = "";
-        if (i == 17) { 
-            var char = line.getCell(0);
-            tail = ` ${char.getBgColor()} ${char.getFgColor()} ${char.getBgColorMode()} ${char.getFgColorMode()}`
-        }
-        console.log(`${rid} [${row}]${tail}`);
+        console.log(`${rid} [${row}]`);
     }
 }
 
