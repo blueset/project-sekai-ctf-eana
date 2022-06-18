@@ -13,36 +13,115 @@
 </head>
 <body class="text-white bg-zinc-800">
     <div class="w-screen h-screen flex flex-row">
-        <aside class="min-w-[200px] max-w-[400px] w-1/3 flex flex-col overflow-y-auto p-4" id="aside">
-            <h1 class="text-xs text-white/75 uppercase tracking-wide">Project SEKAI Online Judge</h1>
-            <h2 class="text-xl font-semibold">Challenge Name</h2>
-            <a class="px-4 py-2 rounded bg-cyan-700 hover:bg-cyan-600 disabled:bg-zinc-700 disabled:hover:bg-zinc-700 my-2 text-center" href="https://example.com/" target="_blank">Download PDF</a>
-            <select name="language" id="language" class="bg-transparent my-2 border border-white/25 rounded p-2">
-                <option value="python">Python 3</option>
-                <option value="cpp">C++</option>
-                <option value="typescript">TypeScript</option>
-            </select>
+        <aside class="min-w-[200px] max-w-[400px] w-1/3 flex flex-col overflow-y-auto p-4 pt-0" id="aside">
+            <header class="sticky top-0 flex flex-col bg-zinc-800 pt-4">
+                <h1 class="text-xs text-white/75 uppercase tracking-wide">Project SEKAI Online Judge</h1>
+                <select name="challenge" id="challenge" class="text-xl font-semibold bg-transparent my-2 border-b border-white/25 text-ellipsis pb-2">
+                    <option value="0">言葉は今風になって 世界に散らかっていく</option>
+                    <option value="1">解答代わりの被れた可能性が</option>
+                    <option value="2">ビートマシンとあり得ないほどの高速縦連リリック</option>
+                </select>
+                <a id="challenge-link" class="px-4 py-2 rounded bg-transparent hover:bg-zinc-700 border border-white/25 disabled:bg-zinc-700 disabled:hover:bg-zinc-700 my-2 text-center" href="https://example.com/1.pdf" target="_blank">Download PDF</a>
+                <select name="language" id="language" class="bg-transparent my-2 border border-white/25 rounded p-2">
+                    <option value="Python3">Python 3</option>
+                    <option value="C++">C++</option>
+                    <option value="C">C</option>
+                    <option value="Java">Java</option>
+                    <option value="Go">Go</option>
+                    <option value="JavaScript">JavaScript</option>
+                </select>
+            </header>
             <div class="grow"></div>
-            <button id="submit" class="text-center h-12 px-4 py-2 rounded bg-cyan-700 hover:bg-cyan-600 disabled:bg-zinc-700 disabled:hover:bg-zinc-700 my-2">Submit</button>
-            <h3 class="text-lg font-semibold">Submissions</h3>
+            <nav class="sticky top-[190px] flex flex-col bg-zinc-800">
+                <button id="submit" class="text-center h-12 px-4 py-2 rounded bg-cyan-700 hover:bg-cyan-600 disabled:bg-zinc-700 disabled:hover:bg-zinc-700 my-2">Submit</button>
+                <h3 class="text-lg font-semibold">Submissions</h3>
+            </nav>
+            <div id="submissions"></div>
         </aside>
         <main class="grow basis-0 overflow-hidden" id="codeEditor">
             
         </main>
     </div>
     <script>
-        window.submissions = 0;
+        var defaultChallenge = {
+            code: {
+                Python3: `print("Hello, World!")\n`,
+                "C++": `#include <iostream>\nusing namespace std;\nint main() {\n    cout << "Hello, World!" << endl;\n    return 0;\n}\n`,
+                C: `#include <stdio.h>\nint main() {\n    printf("Hello, World!");\n    return 0;\n}\n`,
+                Java: `public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, World!");\n    }\n}\n`,
+                Go: `package main\nimport "fmt"\nfunc main() {\n    fmt.Println("Hello, World!")\n}\n`,
+                JavaScript: `console.log("Hello, World!");\n`,
+            },
+            language: 'Python3',
+            submissions: [],
+        };
+        window.state = {
+            challenge: 0,
+            challenges: [
+                structuredClone(defaultChallenge),
+                structuredClone(defaultChallenge),
+                structuredClone(defaultChallenge),
+            ]
+        };
+
+        const monacoLangMap = {
+            "Python3": "python",
+            "C++": "cpp",
+            "C": "c",
+            "Java": "java",
+            "Go": "go",
+            "JavaScript": "javascript"
+        };
+
+        const caseIcon = {
+            SUCCESS: "ic:baseline-check-circle",
+            WRONG_ANSWER: "ic:baseline-cancel",
+            CPU_TIME_LIMIT_EXCEEDED: "ic:baseline-hourglass-empty",
+            REAL_TIME_LIMIT_EXCEEDED: "ic:baseline-hourglass-empty",
+            MEMORY_LIMIT_EXCEEDED: "clarity:memory-solid-alerted",
+            RUNTIME_ERROR: "ic:baseline-running-with-errors",
+            SYSTEM_ERROR: "ic:baseline-error",
+            COMPILE_ERROR: "codicon:bracket-error",
+        };
+
+        const caseName = {
+            SUCCESS: "Correct",
+            WRONG_ANSWER: "Wrong Answer",
+            CPU_TIME_LIMIT_EXCEEDED: "Time Limit Exceeded",
+            REAL_TIME_LIMIT_EXCEEDED: "Time Limit Exceeded",
+            MEMORY_LIMIT_EXCEEDED: "Memory Limit Exceeded",
+            RUNTIME_ERROR: "Runtime Error",
+            SYSTEM_ERROR: "Error",
+            COMPILE_ERROR: "Compile Error",
+        };
+
+        var submit = document.getElementById("submit");
+        var aside = document.getElementById("aside");
+        var language = document.getElementById("language");
+        var challenge = document.getElementById("challenge");
+        var challengeLink = document.getElementById("challenge-link");
+        var submissions = document.getElementById("submissions");
 
         require.config({ paths: { vs: 'static/vs' } });
         require(['vs/editor/editor.main'], function () {
             monaco.editor.setTheme('vs-dark');
+
+            var chall = window.state.challenges[window.state.challenge];
+
             var editor = window.editor = monaco.editor.create(document.getElementById('codeEditor'), {
-                value: `print("Hello World!")\n`,
-                language: 'python',
+                value: chall.code[chall.language],
+                language: monacoLangMap[chall.language],
                 fontFamily: `"Cascadia Code PL", "Cascadia Code", monospace`, 
                 fontLigatures: `'calt', 'ss01'`,
                 fontSize: 16,
                 automaticLayout: true,
+            });
+
+            editor.onDidChangeModelContent(function (e) {
+                const chall = window.state.challenges[window.state.challenge];
+                chall.code[chall.language] = editor.getValue();
+                localStorage.setItem('state', JSON.stringify(window.state));
+                // console.log("updating code", e, window.state.challenge, chall.language, chall.code[chall.language]);
             });
 
             window.onresize = function (){
@@ -50,13 +129,88 @@
             };
         });
 
-        var language = document.getElementById("language");
         language.addEventListener("change", function(evt) {
-            monaco.editor.setModelLanguage(window.editor.getModel(), evt.target.value);
+            window.state.challenges[window.state.challenge].language = evt.target.value;
+            localStorage.setItem('state', JSON.stringify(window.state));
+            uiLoadLanguage();
         });
 
-        var submit = document.getElementById("submit");
-        var aside = document.getElementById("aside");
+        challenge.addEventListener("change", function(evt) {
+            const cid = parseInt(evt.target.value);
+            window.state.challenge = cid;
+            uiLoadChallenge();
+            const lang = window.state.challenges[window.state.challenge].language;
+            language.value = lang;
+            uiLoadLanguage();
+            localStorage.setItem('state', JSON.stringify(window.state));
+        });
+
+        // Refresh from localStorage
+        if (localStorage.getItem('state')) {
+            window.state = JSON.parse(localStorage.getItem('state'));
+            challenge.value = window.state.challenge;
+            language.value = window.state.challenges[window.state.challenge].language;
+            uiLoadChallenge();
+        } else {
+            localStorage.setItem('state', JSON.stringify(window.state));
+        }
+
+        function refreshTooltip() {
+            tippy('[data-tippy-content]', {
+                allowHTML: true,
+                maxWidth: "none",
+                interactive: true,
+            });
+        }
+
+        function uiLoadLanguage() {
+            monaco.editor.setModelLanguage(window.editor.getModel(), monacoLangMap[language.value]);
+            editor.getModel().setValue(window.state.challenges[window.state.challenge].code[language.value]);
+        }
+
+        function escapeHtml(unsafe) {
+            return unsafe.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
+        }
+
+        function generateCase(testCase) {
+            const color = testCase.status === "SUCCESS" ? "text-green-400" : "text-red-400";
+            const icon = caseIcon[testCase.status] || "ic:baseline-error";
+            const name = caseName[testCase.status] || "Error";
+            var prompt = "";
+            if (testCase.status === "SUCCESS") {
+                prompt = `<b>${name}</b><br>Time: ${testCase.timeMs} ms<br>Memory: ${testCase.memoryKb} KB`;
+            } else {
+                prompt = `<b>${name}</b><br><code><pre>${escapeHtml(testCase.output)}</pre></code>`;
+            }
+            var node = document.createElement("li");
+            node.className = "inline-block mr-1";
+            node.dataset.tippyContent = prompt;
+            node.innerHTML = `<span class="iconify ${color}" data-icon="${icon}"></span>`;
+            return node;
+        }
+
+        function generateSubmission(data, idx) {
+            var submissions = window.state.challenges[window.state.challenge].submissions;
+            var section = document.createElement("section");
+            var cases = data.testCases.map(generateCase);
+            section.innerHTML = `<h4 class="font-medium">Submission ${idx + 1}</h4>`;
+            var ul = document.createElement("ul");
+            ul.className = "text-2xl my-2";
+            ul.append(...cases);
+            section.append(ul);
+            if (data.flag) {
+                section.innerHTML += `<code class="text-green-400 break-all my-2 block">${data.flag}</code>`;
+            }
+            return section;
+        }
+
+        function uiLoadChallenge() {
+            var chall = window.state.challenges[window.state.challenge];
+            var submissionNodes = chall.submissions.map(generateSubmission);
+            submissions.replaceChildren(...submissionNodes);
+            refreshTooltip();
+            challengeLink.href = `https://example.com/${window.state.challenge}.pdf`;
+        }
 
         function onFinish() {
             submit.disabled = false;
@@ -64,6 +218,8 @@
             submit.classList.add("bg-cyan-700");
             submit.classList.add("hover:bg-cyan-600");
             submit.innerHTML = "Submit";
+            challenge.disabled = false;
+            language.disabled = false;
         }
 
         submit.addEventListener("click", function(evt) {
@@ -73,12 +229,15 @@
             submit.classList.add("bg-zinc-700");
             submit.classList.remove("hover:bg-cyan-600");
             submit.innerHTML = `<span class="iconify inline-block" data-icon="line-md:loading-loop"></span>`;
+            challenge.disabled = true;
+            language.disabled = true;
 
             fetch("/submit", {
                 method: "POST",
                 body: JSON.stringify({
                     language: language.value,
                     code: window.editor.getValue(),
+                    challengeId: window.state.challenge,
                 }),
                 headers: {
                     "Content-Type": "application/json",
@@ -87,22 +246,12 @@
             .then((resp) => resp.json())
             .then((data) => {
                 console.log(data);
-                window.submissions++;
-                var section = document.createElement("section");
-                var cases = data.testCases.map((e) => {
-                    if (e.status === "correct") return `<li class="inline-block mr-1" data-tippy-content="<b>Correct</b><br>Time: ${e.timeMs} ms<br>Memory: ${e.memoryKb} KB"><span class="iconify text-green-400" data-icon="ic:baseline-check-circle"></span></li>`;
-                    else if (e.status === "wrongAnswer") return `<li class="inline-block mr-1" data-tippy-content="<b>Wrong Answer</b><br>Time: ${e.timeMs} ms<br>Memory: ${e.memoryKb} KB"><span class="iconify text-red-400" data-icon="ic:baseline-cancel"></span></li>`;
-                    else if (e.status === "compilationError") return `<li class="inline-block mr-1" data-tippy-content="<b>Compilation failed</b>"><span class="iconify text-red-400" data-icon="codicon:bracket-error"></span></li>`;
-                    else if (e.status === "runTimeError") return `<li class="inline-block mr-1" data-tippy-content="<b>Runtime Error</b>"><span class="iconify text-red-400" data-icon="ic:baseline-running-with-errors"></span></li>`;
-                    else if (e.status === "timeLimitExceeded") return `<li class="inline-block mr-1" data-tippy-content="<b>Time Limit Exceeded</b><br>Time: ${e.timeMs} ms<br>Memory: ${e.memoryKb} KB"><span class="iconify text-red-400" data-icon="ic:baseline-hourglass-empty"></span></li>`;
-                    else return JSON.stringify(e);
-                }).join("");
-                section.innerHTML = `<h4 class="font-medium">Submission ${window.submissions}</h4><ul class="text-2xl my-2">${cases}</ul>`;
-                if (data.flag) {
-                    section.innerHTML += `<code class="text-green-400">${data.flag}</code>`;
-                }
-                aside.appendChild(section);
-                tippy('[data-tippy-content]', {allowHTML: true});
+                var subs = window.state.challenges[window.state.challenge].submissions;
+                var section = generateSubmission(data, subs.length);
+                submissions.appendChild(section);
+                refreshTooltip();
+                subs.push(data);
+                localStorage.setItem('state', JSON.stringify(window.state));
                 onFinish();
             })
             .catch(() => {
