@@ -13,7 +13,7 @@ mode = 0
 modes = sorted(set(i[1] for i in data if i[0] == "1.30.1"))
 colors0 = {
     0: "#B71C1C",
-    129: "#01579B",
+    129: "#E0E0E0",
     128: "#33691E",
 }
 colors1d = {
