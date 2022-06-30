@@ -30,7 +30,6 @@ In case they would need to use the author names anywhere, I would go with *pamLE
 * [sahuang-imageEncryption](./sahuang-imageEncryption)
 * [sahuang-oj-tex](./sahuang-electricBox)
 * [sahuang-oj](./sahuang-oj)
-* [sahuang-osu](./sahuang-osu)
 * [sahuang-nonogram](https://codepen.io/blueset/pen/NWyZzwp)
 
 ## Stuff I did during playtest
@@ -38,6 +37,7 @@ In case they would need to use the author names anywhere, I would go with *pamLE
 * [sahuang-matrixLab1](./sahuang-matrixLab1)
 * [sahuang-matrixLab2](./sahuang-matrixLab2)
 * [sahuang-timeCapsule](./sahuang-timeCapsule)
+* [sahuang-osu](./sahuang-osu)
 
 ## License
 
