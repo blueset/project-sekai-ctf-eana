@@ -23,3 +23,5 @@ Open it with Adobe Acrobat Reader, and we can see there are 13 fonts embedded in
 - Source Sans Pro
 
 Joining the first letter of the names, we have `SEKAI{KNOWYOURFONTS}` as the flag
+
+Alternatively websites like http://pdf-analyser.edpsciences.org/ can also be used.
