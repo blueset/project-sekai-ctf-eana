@@ -16,6 +16,7 @@ In case they would need to use the author names anywhere, I would go with *pamLE
 * misc: [noisyPair](./misc-noisyPair)
 * misc: [rabbitHole](./misc-rabbitHole)
 * misc: [tz](./misc-tz)
+* misc: [dataMatrixSpectrogram](./misc-dataMatrixSpectrogram)
 * ppc: [hyperlink](./ppc-hyperlink)
 * ppc: [mindCalculator](./ppc-mindCalculator)
 * ppc: [ktane](./ppc-ktane)
