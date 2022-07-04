@@ -66,7 +66,7 @@ async def echo(request):
         timeout = None
         result = "start"
         while True:
-            msg = await msg.receive(timeout=timeout)
+            msg = await ws.receive(timeout=timeout)
             timeout = 30
             if msg.type != aiohttp.WSMsgType.TEXT:
                 await ws.send_str("ERR")
@@ -75,16 +75,15 @@ async def echo(request):
             if str(input_txt) != str(result):
                 wrong_ans += 1
                 await ws.send_str(f"{counter}/100 correct, {wrong_ans}/20 wrong (+1)")
-                # return ws
             else:
-                if wrong_ans >= 20:
-                    return ws
                 counter += 1
+                await ws.send_str(f"{counter}/100 correct (+1), {wrong_ans}/20 wrong")
+            if wrong_ans >= 20:
+                return ws
             if counter >= 100:
                 break
             eqn, result = generate_equation()
-            print(eqn, result)
-            await ws.send_str(f"{counter}/100 correct (+1), {wrong_ans}/20 wrong")
+            # print(eqn, result)
             async for data in get_voice(eqn):
                 await ws.send_bytes(data)
         with open("flag.txt", "r") as f:
