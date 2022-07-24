@@ -7,10 +7,10 @@ function escape(s) {
 
 function directory(keys) {
     const values = {
-        "title": "Project SEKAI",
+        "title": "View Source CTF",
         "description": "Powered by Node.js and Express.js",
         "flag": process.env.FLAG,
-        "lyrics": "Cynical-na shisen no ame, kyo mo ryome wo kiraku furi.",
+        "lyrics": "Good job, you’ve made it to the bottom of the mind control facility. Well done.",
         "createdAt": "1970-01-01T00:00:00.000Z",
         "lastUpdate": "2022-02-22T22:22:22.222Z",
         "source": require('fs').readFileSync(__filename),
@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
     const payload = req.query.payload;
 
     if (payload && typeof payload === "string") {
-        const matches = /([\.\(\)'"\[\]\{\}<>_$%\\xu^;]|import|require|process|proto|constructor|app|express|req|res|env|process|fs|child|cat|spawn|fork|exec|file|return|this|toString)/gi.exec(payload);
+        const matches = /([\.\(\)'"\[\]\{\}<>_$%\\xu^;=]|import|require|process|proto|constructor|app|express|req|res|env|process|fs|child|cat|spawn|fork|exec|file|return|this|toString)/gi.exec(payload);
         if (matches) {
             res.status(400).send(matches.map(i => `<code>${i}</code>`).join("<br>"));
         } else {

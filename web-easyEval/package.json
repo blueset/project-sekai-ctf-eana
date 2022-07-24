@@ -1,0 +1,14 @@
+{
+  "name": "web-easyeval",
+  "version": "1.0.0",
+  "description": "Easy Eval for Project SEKAI CTF",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eana Hufwe",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}

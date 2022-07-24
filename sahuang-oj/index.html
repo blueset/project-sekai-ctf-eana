@@ -22,14 +22,17 @@
                     <option value="2">ビートマシンとあり得ないほどの高速縦連リリック</option>
                 </select>
                 <a id="challenge-link" class="px-4 py-2 rounded bg-transparent hover:bg-zinc-700 border border-white/25 disabled:bg-zinc-700 disabled:hover:bg-zinc-700 my-2 text-center" href="https://example.com/1.pdf" target="_blank">Download PDF</a>
-                <select name="language" id="language" class="bg-transparent my-2 border border-white/25 rounded p-2">
-                    <option value="Python3">Python 3</option>
-                    <option value="C++">C++</option>
-                    <option value="C">C</option>
-                    <option value="Java">Java</option>
-                    <option value="Go">Go</option>
-                    <option value="JavaScript">JavaScript</option>
-                </select>
+                <div class="flex row items-center">
+                    <select name="language" id="language" class="bg-transparent my-2 border border-white/25 rounded p-2 grow">
+                        <option value="Python3">Python 3</option>
+                        <option value="C++">C++</option>
+                        <option value="C">C</option>
+                        <option value="Java">Java</option>
+                        <option value="Go">Go</option>
+                        <option value="JavaScript">JavaScript</option>
+                    </select>
+                    <div id="compileCommand" data-tippy-content="Execute command:<br><code>python3 <var>{exe_path}</var></code>"><span class="iconify ml-2 text-xl" data-icon="ic:outline-info"></span></div>
+                </div>
             </header>
             <div class="grow"></div>
             <nav class="sticky top-[190px] flex flex-col bg-zinc-800">
@@ -43,6 +46,14 @@
         </main>
     </div>
     <script>
+        var compileCommands = {
+            "Python3": "Execute command:<br><code>python3 <var>{exe_path}</var></code>",
+            "C++": "Compile command:<br><code>g++ -DONLINE_JUDGE -O2 -w -fmax-errors=3 -std=c++14 <var>{src_path}</var> -lm -o <var>{exe_path}</var></code>",
+            "C": "Compile command:<br><code>gcc -DONLINE_JUDGE -O2 -w -fmax-errors=3 -std=c11 <var>{src_path}</var> -lm -o <var>{exe_path}</var></code>",
+            "Java": "Compile command:<br><code>javac <var>{src_path}</var> -d {exe_dir} -encoding UTF8</code>",
+            "Go": "Compile command:<br><code>go build -o <var>{exe_path}</var> <var>{src_path}</var></code>",
+            "JavaScript": "Execute command:<br><code>node <var>{exe_path}</var></code>",
+        };
         var defaultChallenge = {
             code: {
                 Python3: `print("Hello, World!")\n`,
@@ -55,6 +66,7 @@
             language: 'Python3',
             submissions: [],
         };
+        var tippyInstances = [];
         window.state = {
             challenge: 0,
             challenges: [
@@ -101,6 +113,7 @@
         var challenge = document.getElementById("challenge");
         var challengeLink = document.getElementById("challenge-link");
         var submissions = document.getElementById("submissions");
+        var compileCommand = document.getElementById("compileCommand");
 
         require.config({ paths: { vs: 'static/vs' } });
         require(['vs/editor/editor.main'], function () {
@@ -111,7 +124,7 @@
             var editor = window.editor = monaco.editor.create(document.getElementById('codeEditor'), {
                 value: chall.code[chall.language],
                 language: monacoLangMap[chall.language],
-                fontFamily: `"Cascadia Code PL", "Cascadia Code", monospace`, 
+                fontFamily: `"Rec Mono Casual", "Recursive Mono", "Cascadia Code PL", "Cascadia Code", monospace`, 
                 fontLigatures: `'calt', 'ss01'`,
                 fontSize: 16,
                 automaticLayout: true,
@@ -150,13 +163,18 @@
             window.state = JSON.parse(localStorage.getItem('state'));
             challenge.value = window.state.challenge;
             language.value = window.state.challenges[window.state.challenge].language;
+            compileCommand.dataset.tippyContent = compileCommands[language.value];
+            refreshTooltip();
             uiLoadChallenge();
         } else {
             localStorage.setItem('state', JSON.stringify(window.state));
         }
 
         function refreshTooltip() {
-            tippy('[data-tippy-content]', {
+            tippyInstances.forEach(function(inst) {
+                inst.destroy();
+            });
+            tippyInstances = tippy('[data-tippy-content]', {
                 allowHTML: true,
                 maxWidth: "none",
                 interactive: true,
@@ -166,6 +184,8 @@
         function uiLoadLanguage() {
             monaco.editor.setModelLanguage(window.editor.getModel(), monacoLangMap[language.value]);
             editor.getModel().setValue(window.state.challenges[window.state.challenge].code[language.value]);
+            compileCommand.dataset.tippyContent = compileCommands[language.value];
+            refreshTooltip();
         }
 
         function escapeHtml(unsafe) {
@@ -258,6 +278,13 @@
                 onFinish();
             });
         });
+
+        refreshTooltip();
     </script>
+    <style>
+        code, pre {
+            font-family: "Rec Mono Casual", "Recursive Mono", "Cascadia Code PL", "Cascadia Code", monospace;
+        }
+    </style>
 </body>
 </html>
