@@ -9,6 +9,7 @@
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Recursive:wght,CASL,CRSV,MONO@300..1000,1,0..1,1&display=swap" rel="stylesheet">
     <script src="/static/vs/loader.js"></script>
 </head>
 <body class="text-white bg-zinc-800">
@@ -17,9 +18,9 @@
             <header class="sticky top-0 flex flex-col bg-zinc-800 pt-4">
                 <h1 class="text-xs text-white/75 uppercase tracking-wide">Project SEKAI Online Judge</h1>
                 <select name="challenge" id="challenge" class="text-xl font-semibold bg-transparent my-2 border-b border-white/25 text-ellipsis pb-2">
-                    <option value="0">言葉は今風になって 世界に散らかっていく</option>
+                    <option value="0">紡ぎ出した言葉通りの重い熱を放て</option>
                     <option value="1">解答代わりの被れた可能性が</option>
-                    <option value="2">ビートマシンとあり得ないほどの高速縦連リリック</option>
+                    <option value="2">なんでもできる気がする…するだけだ</option>
                 </select>
                 <a id="challenge-link" class="px-4 py-2 rounded bg-transparent hover:bg-zinc-700 border border-white/25 disabled:bg-zinc-700 disabled:hover:bg-zinc-700 my-2 text-center" href="https://example.com/1.pdf" target="_blank">Download PDF</a>
                 <div class="flex row items-center">
@@ -124,8 +125,8 @@
             var editor = window.editor = monaco.editor.create(document.getElementById('codeEditor'), {
                 value: chall.code[chall.language],
                 language: monacoLangMap[chall.language],
-                fontFamily: `"Rec Mono Casual", "Recursive Mono", "Cascadia Code PL", "Cascadia Code", monospace`, 
-                fontLigatures: `'calt', 'ss01'`,
+                fontFamily: `"Recursive", "Rec Mono Casual", "Recursive Mono", "Cascadia Code PL", "Cascadia Code", monospace`, 
+                fontLigatures: `"dlig" 1, "ss08" 1, "ss09" 1, "CASL" 1, "MONO" 1`,
                 fontSize: 16,
                 automaticLayout: true,
             });
@@ -283,7 +284,8 @@
     </script>
     <style>
         code, pre {
-            font-family: "Rec Mono Casual", "Recursive Mono", "Cascadia Code PL", "Cascadia Code", monospace;
+            font-family: "Recursive", "Rec Mono Casual", "Recursive Mono", "Cascadia Code PL", "Cascadia Code", monospace;
+            font-variation-settings: "dlig" 1, "ss08" 1, "ss09" 1, "CASL" 1, "MONO" 1;
         }
     </style>
 </body>
