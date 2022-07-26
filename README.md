@@ -1,7 +1,7 @@
-# Random stuff Eana worked on for Project SEKAI CTF.
+# Random stuff Eana worked on for Project SEKAI CTF, etc.
 > a.k.a. “today’s episode of ‘How to turn a CTF into an online puzzle game’”.
 
-Moving stuff from the team Discord server because it was a mess.
+Stuff were moved from the team Discord server because it was a mess.
 
 In case they would need to use the author names anywhere, I would go with *pamLELcu*. This is a play of pronunciation of the Na’vi word *pamrelsiyu* [pam.ˈɾɛl.si.ju] which means “writer, author”.
 
@@ -42,4 +42,4 @@ In case they would need to use the author names anywhere, I would go with *pamLE
 
 ## License
 
-Code is licensed under the [MIT license](./LICENSE.md). Other content is licensed under the [CC BY 4.0 license](./LICENSE.content.md).
+Code is licensed under the [MIT license](./LICENSE.md). Other content is licensed under the [CC BY 4.0 license](./LICENSE.content.md), unless otherwise specified.
