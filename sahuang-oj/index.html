@@ -77,6 +77,12 @@
             ]
         };
 
+        const cidLookup = {
+            0: 'https://example.com/aa.pdf',
+            1: 'https://example.com/bb.pdf',
+            2: 'https://example.com/cc.pdf'
+        }
+
         const monacoLangMap = {
             "Python3": "python",
             "C++": "cpp",
@@ -230,7 +236,7 @@
             var submissionNodes = chall.submissions.map(generateSubmission);
             submissions.replaceChildren(...submissionNodes);
             refreshTooltip();
-            challengeLink.href = `https://example.com/${window.state.challenge}.pdf`;
+            challengeLink.href = cidLookup[window.state.challenge];
         }
 
         function onFinish() {

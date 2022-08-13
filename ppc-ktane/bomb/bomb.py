@@ -392,6 +392,8 @@ class Wires(Module):
         if clicked == self.answer:
             self.solved = True
             return True
+        elif self.wires[clicked] is None:
+            return True
         return False
 
 class Button(Module):
