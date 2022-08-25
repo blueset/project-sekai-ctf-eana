@@ -9,8 +9,6 @@ from pyfiglet import Figlet
 
 TIME_LIMIT = 110
 
-# logging.basicConfig(filename="log.txt", level=logging.DEBUG)
-
 Faces = namedtuple('Faces', 'front back left right top bottom')
 
 def list_rindex(a: list, v) -> int:
@@ -156,6 +154,36 @@ class Keypad(Module):
                 return True
         else:
             return False
+
+class Mystery(Module):
+    name = "??????"
+    qm = (
+        "   .-''''-..     ",
+        " .' .'''.   `.   ",
+        "/    \   \    `. ",
+        "\    '   |     | ",
+        " `--'   /     /  ",
+        "      .'  ,-''   ",
+        "      |  /       ",
+        "      | '        ",
+        "      '-'        ",
+        "     .--.        ",
+        "    /    \       ",
+        "    \    /       ",
+        "     `--'        ",
+    )
+
+    def __init__(self) -> None:
+        ...
+
+    def render(self, win: curses.window, t: int, l: int) -> None:
+        super().render(win, t, l)
+        loff = 4
+        for idx, i in enumerate(self.qm):
+            win.addstr(t + 2 + idx, l + loff, i, Colors.Yellow)
+
+    def click(self, t: int, l: int, bstd: int) -> bool:
+        return True
 
 class WhosOnFirst(Module):
     name = "Who’s on first"
@@ -562,7 +590,9 @@ class Bomb:
         "right": ("top", "bottom", "front", "back"),
     }
 
-    def __init__(self) -> None:
+    time_limit = TIME_LIMIT
+
+    def __init__(self, time_limit=TIME_LIMIT) -> None:
         self.modules = Faces(
             front=[
                 [None, None, None],
@@ -582,7 +612,8 @@ class Bomb:
         self.generate_indicators()
         random.shuffle(self.modules.top)
         random.shuffle(self.modules.bottom)
-        self.countdown = Countdown(TIME_LIMIT)
+        self.time_limit = time_limit
+        self.countdown = Countdown(time_limit)
         self.face = "front"
         self.modules.front[0][1] = self.countdown
         modules = [
@@ -701,6 +732,8 @@ class Bomb:
         win.erase()
         # haeder, footer
         win.addstr(0, 0, "Defuse the bomb with your mouse.")
+        if self.time_limit != TIME_LIMIT:
+            win.addstr(1, 0, "DEMO MODE - Fake flag only.", Colors.Red)
         win.addstr(38, 0, f"Facing: {self.face.capitalize()}")
         # left arrow
         win.addstr(18, 1, "╱")
