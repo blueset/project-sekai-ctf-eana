@@ -1,28 +1,13 @@
 import sys
-text = sys.stdin.read()
-
-# for i in list(range(30, 38)):
-#     for j in list(range(40, 48)):
-#         print(f"\033[{i};{j}m☻\033[0m", end="")
-#         print(f"\033[{i};{j+60}m☻\033[0m", end="")
-#     print()
-#     for j in list(range(40, 48)):
-#         print(f"\033[{i+60};{j}m☻\033[0m", end="")
-#         print(f"\033[{i+60};{j+60}m☻\033[0m", end="")
-#     print()
-
-bits = "".join(bin(ord(i))[2:].zfill(8) for i in text)
-# bits = bits.ljust(len(bits) + (10 - (len(bits) % 10)) % 10, "0")
-
-result = ""
-for i in range(0, len(bits), 8):
-    left = bits[i:i+4]
-    right = bits[i+4:i+8]
-    # print(left, right)
-    lcolor = 30 if left[0] == "0" else 90
-    lcolor += int(left[1:], 2)
-    rcolor = 40 if right[0] == "0" else 100
-    rcolor += int(right[1:], 2)
-    result += f"\033[{lcolor};{rcolor}m☻\033[0m"
-
-print(result)
+stdin = sys.stdin.buffer.read()
+d = "".join(bin(i)[2:].zfill(8) for i in stdin)
+p = ""
+for i in range(0, len(d), 8):
+    l = d[i:i+4]
+    h = d[i+4:i+8]
+    he = 30 if h[0] == "0" else 90
+    he += int(h[1:], 2)
+    le = 40 if l[0] == "0" else 100
+    le += int(l[1:], 2)
+    p += f"\033[{he};{le}m☻\033[0m"
+print(p)
