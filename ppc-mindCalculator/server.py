@@ -67,7 +67,7 @@ async def echo(request):
         result = "start"
         while True:
             msg = await ws.receive(timeout=timeout)
-            timeout = 30
+            timeout = 25
             if msg.type != aiohttp.WSMsgType.TEXT:
                 await ws.send_str("ERR")
                 break

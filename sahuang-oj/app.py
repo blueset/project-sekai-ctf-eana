@@ -91,7 +91,7 @@ def submit():
             # RUNTIME_ERROR will print output such as "ReferenceError: rl is not defined"
             test_cases.append({
                 "status": status_map[int(c["result"])],
-                "output": c["output"]
+                "output": c["output"] if c["result"] != -1 else "Wrong answer."
             })
         else:
             test_cases.append({
