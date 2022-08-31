@@ -9,7 +9,7 @@ def get_resource(mid):
 
 def download(mid):
     resource = get_resource(mid)
-    r = requests.get(f"https://sekai-res.dnaroma.eu/file/sekai-assets/music/short/{resource}_rip/{resource}_short.mp3")
+    r = requests.get(f"https://storage.sekai.best/sekai-assets/music/short/{resource}_rip/{resource}_short.mp3")
     filename = f"tracks/{mid}.mp3"
     with open(filename, "wb") as f:
         f.write(r.content)
