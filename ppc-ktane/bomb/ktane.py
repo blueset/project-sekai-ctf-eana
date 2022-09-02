@@ -16,11 +16,11 @@ def print_center_screen(win: curses.window, text: str):
             print_center_row(win, starting_row + idx, i)
 
 def main(win: curses.window):
-    demo_flag = "BOMB{爆ぜろ今だ爆ぜろ閃光と共に響く爆音}"
-    is_demo = os.environ.get("DEMO", "") == "1"
-    flag = demo_flag if is_demo else os.environ.get("FLAG", "")
+    time_limit = int(os.environ.get("TICKS", "120"))
+    flag = os.environ.get("FLAG", "BOMB{爆ぜろ今だ爆ぜろ閃光と共に響く爆音}")
+    prompt = os.environ.get("PROMPT", "")
 
-    game = bomb.Bomb(time_limit=9999) if is_demo else bomb.Bomb()
+    game = bomb.Bomb(time_limit=time_limit, prompt=prompt)
 
     curses.start_color()
     curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)

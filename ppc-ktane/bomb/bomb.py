@@ -592,7 +592,8 @@ class Bomb:
 
     time_limit = TIME_LIMIT
 
-    def __init__(self, time_limit=TIME_LIMIT) -> None:
+    def __init__(self, time_limit=TIME_LIMIT, prompt="") -> None:
+        self.prompt = prompt
         self.modules = Faces(
             front=[
                 [None, None, None],
@@ -732,8 +733,8 @@ class Bomb:
         win.erase()
         # haeder, footer
         win.addstr(0, 0, "Defuse the bomb with your mouse.")
-        if self.time_limit != TIME_LIMIT:
-            win.addstr(1, 0, "DEMO MODE - Fake flag only.", Colors.Red)
+        if self.prompt:
+            win.addstr(1, 0, self.prompt, Colors.Red)
         win.addstr(38, 0, f"Facing: {self.face.capitalize()}")
         # left arrow
         win.addstr(18, 1, "╱")

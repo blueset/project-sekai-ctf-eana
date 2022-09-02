@@ -29,5 +29,5 @@ CMD ["/home/ctf/start.sh"]
 EXPOSE 9999
 
 # docker build --tag project-sekai-ctf-ktane .
-# docker run -d --publish 58263:9999 --env-file ./.env --name project-sekai-ctf-ktane project-sekai-ctf-ktane
-# docker run -d --publish 58263:9999 --env-file ./.env --env DEMO=1 --name project-sekai-ctf-ktane project-sekai-ctf-ktane
+# docker run -d --publish 58263:9999 --env-file ./pro.env --name project-sekai-ctf-ktane project-sekai-ctf-ktane
+# docker run -d --publish 58263:9999 --env-file ./game.env --name project-sekai-ctf-ktane project-sekai-ctf-ktane
