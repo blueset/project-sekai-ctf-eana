@@ -12,6 +12,15 @@ _[ 1 week later... ]_
 
 `stty -echo -icanon && nc 127.0.0.1 58263`
 
+# Console Port Pro
+
+– Hey Miku, since you’ve already done the porting, can you write an AI sovling the game for me?
+– Well, it shouldn’t be hard. I’ll give it a try.
+– Cool. Here’s the game you need to solve. I made some changes so that you won’t cheat manually.
+– Hmm... 
+
+`stty -echo -icanon && nc 127.0.0.1 58263`
+
 ## Hints
 
 * Only “Keypad”, “Who’s on first”, “Memory”, “Wires”, “Button”, and “Password” modules are ported. No other module will appear on the bomb.
