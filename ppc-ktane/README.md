@@ -14,7 +14,7 @@ _[ 1 week later... ]_
 
 # Console Port Pro
 
-– Hey Miku, since you’ve already done the porting, can you write an AI sovling the game for me?
+– Hey Miku, since you’ve already done the porting, can you write an AI solving the game for me?
 – Well, it shouldn’t be hard. I’ll give it a try.
 – Cool. Here’s the game you need to solve. I made some changes so that you won’t cheat manually.
 – Hmm... 
