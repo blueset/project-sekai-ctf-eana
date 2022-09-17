@@ -11,6 +11,7 @@
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Recursive:wght,CASL,CRSV,MONO@300..1000,1,0..1,1&display=swap" rel="stylesheet">
     <script src="/static/vs/loader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 </head>
 <body class="text-white bg-zinc-800">
     <div class="w-screen h-screen flex flex-row">
@@ -71,9 +72,9 @@
         window.state = {
             challenge: 0,
             challenges: [
-                structuredClone(defaultChallenge),
-                structuredClone(defaultChallenge),
-                structuredClone(defaultChallenge),
+                _.cloneDeep(defaultChallenge),
+                _.cloneDeep(defaultChallenge),
+                _.cloneDeep(defaultChallenge),
             ]
         };
 
