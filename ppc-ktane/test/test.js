@@ -45,6 +45,7 @@ async function processLine(term, line) {
 }
 
 function processFront(term) {
+    // printScreen(term);
     if (GameState.modules.countdown === undefined) {
         var l0 = term.buffer.active.getLine(4);
         var m0 = l0.translateToString(true, 3, 3 + 16).trim();
@@ -143,19 +144,23 @@ async function clientMain() {
     await pClient.connect({
         // host: "20.124.204.46",
         // port: 9582,
-        host: "127.0.0.1",
-        port: 58263,
+        host: "challs.ctf.sekai.team",
+        port: 6001,
+        // host: "127.0.0.1",
+        // port: 58263,
         onread: {
             buffer: Buffer.alloc(16 * 1024),
         }
     });
     client.on("data", async (data) => {
         var dataStr = data.toString();
+        // console.log("datastr:", JSON.stringify(dataStr));
         await processLine(term, data);
         if (dataStr.match(/Press any key to start/g)) {
             client.write("a");
         } else if (term.buffer.active.getLine(38).translateToString().match(/Facing: Front/g)) {
             processFront(term);
+            console.log("Countdown", GameState.countdown);
             if (!GameState.checkedSides) {
                 client.write(click(40, 2));
             } else if (GameState.modules.button !== undefined && !GameState.modules.button.solved) {
@@ -190,6 +195,7 @@ async function clientMain() {
             printScreen(term);
             client.write("b");
         } else {
+            console.log("Unknown state");
         }
         console.log("End on data.")
     });

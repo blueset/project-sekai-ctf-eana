@@ -7,7 +7,7 @@ from classproperty import classproperty
 import logging
 from pyfiglet import Figlet
 
-TIME_LIMIT = 110
+TIME_LIMIT = 120
 
 Faces = namedtuple('Faces', 'front back left right top bottom')
 

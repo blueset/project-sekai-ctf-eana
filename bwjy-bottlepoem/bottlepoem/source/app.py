@@ -16,6 +16,7 @@ def index():
             tfile = f.read()
     except Exception as e:
         return "No This Poems"
+    response.set_header('Content-Type', 'text/plain')
     return tfile
 
 @error(404)

@@ -33,6 +33,7 @@ function up(x, y) {
 }
 
 function click(x, y) {
+    console.log("Click",x,y);
     return down(x, y) + up(x, y);
 }
 

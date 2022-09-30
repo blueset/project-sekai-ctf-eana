@@ -78,7 +78,7 @@ def main(win: curses.window):
     win.addstr(10, 24, "Hurry up, the flag’s about to explode!")
     win.addstr(12, 21, "─" * 41)
     win.addstr(14, 21, "2. Bomb configuration")
-    win.addstr(16, 24, f"{bomb.TIME_LIMIT} ticks │ {len(game.bomb_modules) - 1} Modules │ 1 Strike")
+    win.addstr(16, 24, f"{time_limit} ticks │ {len(game.bomb_modules) - 1} Modules │ 1 Strike")
     win.addstr(18, 21, "─" * 41)
     stamp = "EXPLODED" if not outcome else "DEFUSED"
     color = bomb.Colors.Red if not outcome else bomb.Colors.Blue
