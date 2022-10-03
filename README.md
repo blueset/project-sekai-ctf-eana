@@ -25,6 +25,7 @@ In case they would need to use the author names anywhere, I would go with *pamLE
 * sekai: [singIt](./sekai-singIt) (Vocaloid Heardle)
 * sekai: [sus](./sekai-sus)
 * web: [easyEval](./web-easyEval)
+* ctftime-json: [ctftime-json](./ctftime-json)
 
 ## Stuff I worked with other people
 

@@ -70,7 +70,7 @@ async def echo(request):
             timeout = 25
             if msg.type != aiohttp.WSMsgType.TEXT:
                 await ws.send_str("ERR")
-                break
+                return ws
             input_txt = msg.data
             if str(input_txt) != str(result):
                 wrong_ans += 1
