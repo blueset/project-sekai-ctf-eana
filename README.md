@@ -46,3 +46,7 @@ In case they would need to use the author names anywhere, I would go with *pamLE
 ## License
 
 Code is licensed under the [MIT license](./LICENSE.md). Other content is licensed under the [CC BY 4.0 license](./LICENSE.content.md), unless otherwise specified.
+
+## Trivia
+
+> どうせ誰かが公式解説を公開するんで、誰がこんな作者個人の訳分からんところに見に来んの……と思うじゃん
