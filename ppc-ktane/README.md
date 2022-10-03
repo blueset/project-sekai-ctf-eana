@@ -54,4 +54,8 @@ The solver program would consist 2 main parts:
 
 The `stty -echo -icanon` part of the command is to ensure that the console sends any input to the progrmam immediately instead of waiting for the user to press enter. This is necessary because the mouse event reports do not end with a line break.
 
-Flag: <code>SEKAI{ANSI?xterm?VT100?idk&#x60;&#x5c;&#x5f;(''/)_/&#x60;}</code>
+Flag:
+- `SEKAI{SenkouToTomoniHibikuBakuon}`  
+  爆ぜろ！今だ爆ぜろ！閃光と共に響く爆音！ — [サイバーサンダーサイダー / EZFG](https://www.nicovideo.jp/watch/sm15440067)  
+  _That’s the most bomb-y Vocaloid lyrics I can think of XD_
+- <code>SEKAI{ANSI?xterm?VT100?idk&#x60;&#x5c;&#x5f;(''/)_/&#x60;}</code>
