@@ -4,7 +4,7 @@ Someone sent this file to me claiming he got it from a _SEKAI_ where the _palett
 
 ## Writeup
 Hint suggest the game *Project SEKAI: Colorful Stage! feat. Hatsune Miku* and a custom chart server *Purple Palette*.
-Reading the tutorial of the custom chart server, we see that `.sus` is the format to define such charts.
+Reading the tutorial of the custom chart server, we see that `.sus` (Sliding Universal Score) is the format to define such charts.
 
 Google for _sus project sekai chart_, we can find this tool to draw the chart data out: https://github.com/k0tayan/SekaiSUS2img
 
@@ -20,3 +20,8 @@ Flag: `SEKAI{SbtnFmnW2HnYbdDkryunTkrrtims}`
 
 ## Extenral links
 * Editor used: [PaletteWorks](https://paletteworks.mkpo.li/)
+* Tools that might open SUS files:
+    * https://sekai-sus-2img.vercel.app/
+    * https://paletteworks.mkpo.li/
+    * https://github.com/crash5band/MikuMikuWorld
+    * https://github.com/paralleltree/Ched
