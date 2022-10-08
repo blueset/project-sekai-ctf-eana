@@ -45,6 +45,68 @@ The PNG file contains some noisy lines spreaded over the canvas. Opening it, sev
 
 Open the file with an Apple OS (iOS before 14 or macOS before 11 inclusive) to reveal the hidden image.
 
+The bug in their PNG parsers has since been patched in later versions of Apple OSes.
+
+Alternative solutions:
+* Using browser testing platforms like [TestingBot](https://testingbot.com/) or [BrowserStack](https://www.browserstack.com/) to open the PNG in an earlier OS version. (discovered by sahuang)
+* Use forensic tools like [FotoForensics](https://fotoforensics.com/) to decode the image mimicing Apple’s decoding method (discovered by [kaitoyama](https://trap.jp/post/1695/))
+* Reverse [the script used to generate the PNG](https://github.com/DavidBuchanan314/ambiguous-png-packer/blob/main/pack.py) to get the encoded one. (discovered byy [remy_o](https://discord.com/channels/1004529434092654663/1004529435610972279/1026174670376030276))
+
+<details>
+  <summary>remy_o’s script</summary>
+  
+```py
+import struct
+import zlib
+
+with open("Matryoshka-Step2.png", "rb") as f:
+    data = f.read()
+
+def decompress_headerless(data):
+    d = zlib.decompressobj(wbits=-15)     
+    result = d.decompress(data)     
+    result += d.flush()     
+ 
+    # do all the checks we can?
+    assert(len(d.unconsumed_tail) == 0)     
+    assert(len(d.unused_data) == 0)
+ 
+    return result       
+
+# Extract and concatenate IDAT chunks
+w = open("matryoshka.out.png", "wb")
+w.write(data[:8]) # header
+c = data[8:]
+idx = 1
+idats = []
+while c:
+    length, = struct.unpack(">I", c[:4])
+    typ = c[4:8]
+    print("chunk", "length", length, "type", typ)
+    if typ == b"IDAT":
+        idats.append(c[8:8+length])
+    else:
+        # copy chunk
+        if typ == b"IEND":
+            # construct secret image
+            idat1, idat2 = idats
+            data1 = decompress_headerless(idat1[2:])
+            data2 = decompress_headerless(idat2[:-4])
+            idat_unpacked = data1 + data2
+            # dump length32, IDAT, data, CRC
+            idat = zlib.compress(idat_unpacked)
+            w.write(len(idat).to_bytes(4, "big"))
+            w.write(b"IDAT")
+            w.write(idat)
+            w.write(zlib.crc32(b"IDAT" + idat).to_bytes(4, "big"))
+        w.write(c[:length+12])
+    c = c[length+12:]
+    idx += 1
+print("parsed", idx-1, "chunks")
+```
+
+</details>
+
 #### Stage 3
 
 With hint on the picture “COVID-19 vaccination”, and the `shc:/` header of the text stored in the QR code. We can know that this is a https://smarthealth.cards/ card. Search for _SHC QR code decoder_ online, we find find plenty of tools to decode it.
