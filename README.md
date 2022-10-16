@@ -32,7 +32,7 @@ In case they would need to use the author names anywhere, I would go with *pamLE
 ## Stuff I worked with other people
 
 * [sahuang-imageEncryption](./sahuang-imageEncryption)
-* [sahuang-oj-tex](./sahuang-electricBox)
+* [sahuang-oj-tex](./sahuang-oj-tex)
 * [sahuang-oj](./sahuang-oj)
 * [sahuang-nonogram](https://codepen.io/blueset/pen/NWyZzwp)
 * [bwjy-bottlepoem](./bwjy-bottlepoem)
