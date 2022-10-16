@@ -1,6 +1,8 @@
 # Random stuff Eana worked on for Project SEKAI CTF, etc.
 > a.k.a. “today’s episode of ‘How to turn a CTF into an online puzzle game’”.
 
+![A picture of a laptop closed, placed on a wooden table, where the back side has various stickers related to the repository, including 16-segment display, SponsorBlock, OpenType, Keep Talking and Nobody Explodes, Wikipedia, SMART Health card, Calculator, Smiley face from Matryoshka by Hachi, PDF, Human Resource Machine, Flick note from the game Project SEKAI: Colorful Stage feat. Hatsune Miku, Waveform, and steganography keyboard.](https://1a23.com/wp-content/uploads/2022/10/ctf-challs-squash.jpg)
+
 Stuff were moved from the team Discord server because it was a mess.
 
 In case they would need to use the author names anywhere, I would go with *pamLELcu*. This is a play of pronunciation of the Na’vi word *pamrelsiyu* [pam.ˈɾɛl.si.ju] which means “writer, author”.
