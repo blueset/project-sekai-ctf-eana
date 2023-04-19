@@ -40,7 +40,7 @@ while floor[counter]:
 outbox(floor[correct])
 ```
 
-`SEKAI{cOnGr47s}`
+`cvctf{cOnGr47s}`
 
 ![](comment.png)
 
