@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="trigger" tabindex="0">
+        <img src="./Boss.svg" alt="Boss" />
+        <div id="bubble">
+            <label>Tell me more!</label>
+        </div>
+    </div>
+    <div id="content">
+        <div id="cover"></div>
+        <div id="board">
+            <svg width="100%" height="100%" viewBox="0 0 718 1090" fill="none" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g clip-path="url(#clip0_8_42)">
+                    <rect width="718" height="1090" fill="url(#pattern0)" />
+                    <rect x="50" y="525" width="619" height="130" fill="url(#pattern1)" />
+                    <text fill="#49392C" xml:space="preserve" style="white-space: pre" font-family="TwCen" font-size="32" letter-spacing="-0.04em">
+                        <tspan x="69" y="286.109">Hello, worker!</tspan>
+                        <tspan x="69" y="346.109">It&#x2019;s really great to see you again after our 42 years of</tspan>
+                        <tspan x="69" y="381.109">hard work. I almost thought you would never come </tspan>
+                        <tspan x="69" y="416.109">back when you left for the other 7 billion.</tspan>
+                        <tspan x="69" y="476.109">The employee, as usual, has sent you the instructions, </tspan>
+                        <tspan x="69" y="511.109">and said something like...</tspan>
+                    </text>
+                    <text fill="#527B1C" xml:space="preserve" style="white-space: pre" font-family="TwCen" font-size="36" letter-spacing="-0.04em">
+                        <tspan x="84.0148" y="584.936">&#x201c;You should get a big check mark if </tspan>
+                        <tspan x="98" y="616.936">everything goes well.&#x201d;</tspan>
+                    </text>
+                    <text fill="#49392C" xml:space="preserve" style="white-space: pre" font-family="TwCen" font-size="32" letter-spacing="-0.04em">
+                        <tspan x="69" y="692.109">I don&#x2019;t really know what that means, but it must be </tspan>
+                        <tspan x="69" y="727.109">something promising.</tspan>
+                        <tspan x="69" y="787.109">The Facilities Management has left you some notes on </tspan>
+                        <tspan x="69" y="822.109">the floor. Consult them when in doubt. They must be </tspan>
+                        <tspan x="69" y="857.109">very useful. I believe you can do a good job, just like </tspan>
+                        <tspan x="69" y="892.109">the last 42 years. Good luck!</tspan>
+                    </text>
+                    <text fill="#8D8174" xml:space="preserve" style="white-space: pre" font-family="TwCen" font-size="32" letter-spacing="-0.04em">
+                        <tspan x="69" y="952.109">Your presence is requested on the next floor,</tspan>
+                        <tspan x="69" y="987.109">Management</tspan>
+                    </text>
+                </g>
+                <defs>
+                    <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+                        <use xlink:href="#image0_8_42" transform="scale(0.00139276 0.000917431)" />
+                    </pattern>
+                    <pattern id="pattern1" patternContentUnits="objectBoundingBox" width="1" height="1">
+                        <use xlink:href="#image1_8_42" transform="scale(0.00161551 0.00769231)" />
+                    </pattern>
+                    <clipPath id="clip0_8_42">
+                        <rect width="718" height="1090" fill="white" />
+                    </clipPath>
+                    <image id="image0_8_42" width="718" height="1090" xlink:href="clipboard.png" />
+                    <image id="image1_8_42" width="619" height="130" xlink:href="quote.png" />
+                </defs>
+            </svg>
+        </div>
+    </div>
+    <style>
+        @font-face {
+            font-family: "TwCen";
+            src: url("./twcen.ttf");
+        }
+
+        body {
+            font-family: "TwCen", sans-serif;
+        }
+
+        #trigger {
+            display: flex;
+            flex-direction: row;
+        }
+
+        #trigger img {
+            height: 4rem;
+        }
+
+        #bubble {
+            border-radius: 1rem;
+            background-color: #C9B6A9;
+            box-shadow: inset 0 0 0.5rem 0.5rem #BCA390;
+            position: relative;
+            padding: 1rem;
+            margin-left: 1.25rem;
+            transform-origin: left center;
+            animation: bubble-shake 2s linear infinite alternate;
+            color: #4F473E;
+        }
+
+        #bubble::before {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 0.75rem solid transparent;
+            border-right-color: #BCA390;
+            border-left: 0;
+            left: -0.75rem;
+            top: 1.25rem;
+        }
+
+        #bubble label {
+            font-size: 2rem;
+            letter-spacing: -0.05em;
+        }
+
+        #bubble label:hover {
+            background-color: #B29B89;
+            box-shadow: 0 0 0.1rem 0.1rem #B29B89;
+            border-radius: 0.25rem;
+        }
+
+        #bubble label::before {
+            content: "";
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border: 0.625rem solid transparent;
+            border-left-color: #4F473E;
+            border-right: 0;
+            margin-right: 0.5rem;
+            animation: triangle-shake 1s linear infinite alternate;
+        }
+
+        @keyframes bubble-shake {
+            0% {
+                transform: rotate(2deg);
+            }
+
+            100% {
+                transform: rotate(-2deg);
+            }
+        }
+
+        @keyframes triangle-shake {
+            0% {
+                transform: translateX(0.25rem);
+            }
+
+            100% {
+                transform: translateX(0rem);
+            }
+        }
+
+        #content {
+            transition: all 0.5s ease-in-out;
+            opacity: 0;
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-color: #4f473e70;
+            box-shadow: inset 0 0 3rem 1rem #4f473e70;
+            backdrop-filter: blur(0.5rem);
+        }
+
+        #content #board {
+            height: 100%;
+            width: 100%;
+        }
+        #content #board svg g {
+            transition: transform 0.5s ease-in-out;
+            transform-origin: bottom left;
+            transform: rotate(90deg);
+        }
+
+        #trigger:focus+#content {
+            opacity: 1;
+            z-index: 10;
+        }
+
+        #trigger:focus+#content #board svg g {
+            transform: rotate(-2deg);
+        }
+    </style>
+    <script>
+        document.querySelectorAll("tspan").forEach((tspan) => {
+            const chars = [...tspan.textContent.matchAll(/\S\s*/g)];            
+            tspan.innerHTML = chars.map(c => {
+                const dx = Math.random() * 0.5 - 0.25;
+                const dy = Math.random() * 0.5 - 0.25;
+                const rotate = Math.random() * 2 - 1;
+                return `<tspan dx="${dx}" dy="${dy}" rotate="${rotate}">${c}</tspan>`
+            }).join("");
+        });
+    </script>
+</body>
+
+</html>
