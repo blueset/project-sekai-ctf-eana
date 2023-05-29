@@ -159,6 +159,7 @@
             background-color: #4f473e70;
             box-shadow: inset 0 0 3rem 1rem #4f473e70;
             backdrop-filter: blur(0.5rem);
+            pointer-events: none;
         }
 
         #content #board {
@@ -174,6 +175,7 @@
         #trigger:focus+#content {
             opacity: 1;
             z-index: 10;
+            pointer-events: all;
         }
 
         #trigger:focus+#content #board svg g {
