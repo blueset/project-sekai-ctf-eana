@@ -14,15 +14,18 @@ Inspecting the lyrics, we can see this line below, which is obviously not the fl
 
 Looking further into each note, we can see all of them are definded with a specific set of phonemes:
 
-> eh f, eh l, ey, jh iy, k ow l ax n, eh s, iy, k ey, ey, ay, ow p ax n k er l iy b r ae k ih t, eh s, eh m, w ah n, z iy, eh f, ey, aa r, ey, d ah b ax l y uw, ey, w ay, t iy, eh m, aa r, ay, eh s, t iy, ey ch, iy, eh s, iy, k y uw, y uw, iy, eh l, t uw, ow, y uw, aa r, d iy, aa r, iy, ey, eh m, t iy, d iy, w ay, k l ow s k er l iy b r ae k ih t
+> ~~eh f, eh l, ey, jh iy, k ow l ax n, eh s, iy, k ey, ey, ay, ow p ax n k er l iy b r ae k ih t, eh s, eh m, w ah n, z iy, eh f, ey, aa r, ey, d ah b ax l y uw, ey, w ay, t iy, eh m, aa r, ay, eh s, t iy, ey ch, iy, eh s, iy, k y uw, y uw, iy, eh l, t uw, ow, y uw, aa r, d iy, aa r, iy, ey, eh m, t iy, d iy, w ay, k l ow s k er l iy b r ae k ih t~~  
+> eh f, eh l, ey, jh iy, k ow l ax n, eh s, iy, k ey, ey, ay, ow p ax n k er l iy b r ae k ih t, eh s, ow, eh m, iy, w ah n, z iy, eh f, ey, aa r, ey, d ah b ax l y uw, ey, w ay, t iy, eh m, aa r, w ah n, f ay v, eh s, iy, k y uw, y uw, iy, eh l, t iy, ow, ow, y uw, aa r, d iy, aa r, iy, ey, eh m, t iy, d iy, w ay, k l ow s k er l iy b r ae k ih t
 
 Looking further down the JSON file, we can see that Synthesizer V is using [ARPABET] as the phoneme standard. Reading out the entire lyrics using ARPABET, we can get:
 
-> F, L, A, G, colon, S, E, K, A, I, open curly bracket, S, M, one, Z, F, A, R, A, W, A, Y, T, M, R, I, S, T, H, E, S, E, Q, U, E, L, two, O, U, R, D, R, E, A, M, T, D, Y, close curly braket
+> ~~F, L, A, G, colon, S, E, K, A, I, open curly bracket, S, M, one, Z, F, A, R, A, W, A, Y, T, M, R, I, S, T, H, E, S, E, Q, U, E, L, two, O, U, R, D, R, E, A, M, T, D, Y, close curly braket~~  
+> F, L, A, G, colon, S, E, K, A, I, open curly bracket, S, O, M, E, one, Z, F, A, R, A, W, A, Y, T, M, R, one, five, S, E, Q, U, E, L, T, O, O, U, R, D, R, E, A, M, T, D, Y, close curly braket
 
 ...which gives you the flag.
 
-Flag: `SEKAI{SM1ZFARAWAYTMRISTHESEQUEL2OURDREAMTDY}`
+~~Flag: `SEKAI{SM1ZFARAWAYTMRISTHESEQUEL2OURDREAMTDY}`~~  
+`SEKAI{SOME1ZFARAWAYTMR15SEQUELTOOURDREAMTDY}`
 
 > Someone’s faraway tomorrow is the sequel to our dream today.
 
