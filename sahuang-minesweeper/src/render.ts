@@ -53,6 +53,13 @@ function registerListeners(connection: WebSocket) {
     } else if (evt.key === "ArrowRight") {
       connection.send("right");
     }
+
+    // TODO: Debug messages
+    if (evt.key === "w") {
+      connection.send("win");
+    } else if (evt.key === "l") {
+      connection.send("lose");
+    }
   });
 
   player.addEventListener("transitionend", () => {
@@ -64,11 +71,12 @@ function registerListeners(connection: WebSocket) {
   });
 }
 
-export const setupWithWebSocket = () => {
+export const setupWithWebSocket = (winCallback: (flag: string) => void, loseCallback: () => void) => {
   main = document.querySelector("main")!;
   player = document.getElementById("player")!;
   const lives = document.getElementById("lives")!;
   const keys = document.getElementById("keys")!;
+  let hasWon = false;
 
   let playerPos: Point | null = null;
   const connection = new WebSocket(
@@ -79,6 +87,11 @@ export const setupWithWebSocket = () => {
   });
   connection.addEventListener("message", (evt) => {
     const data: Message = JSON.parse(evt.data);
+    if (data.flag) {
+      hasWon = true;
+      winCallback(data.flag);
+      return;
+    }
     populateField(data.map);
     if (playerPos) {
       movePlayer(data.hero.x, data.hero.y);
@@ -106,7 +119,9 @@ export const setupWithWebSocket = () => {
     keys.textContent = data.numKeysRetrieved.toString();
   });
   connection.addEventListener("close", () => {
-    console.log("Disconnected!");
+    if (!hasWon) {
+      loseCallback();
+    }
   });
   registerListeners(connection);
 };

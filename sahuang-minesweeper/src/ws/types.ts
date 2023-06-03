@@ -10,4 +10,5 @@ export interface Message {
     map: Tile[][];
     numKeysRetrieved: number;
     livesRemaining: number;
+    flag?: string;
 }

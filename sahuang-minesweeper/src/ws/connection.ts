@@ -16,17 +16,18 @@ function generateMap(): Tile[][] {
     return map;
 }
 
-function buildMessage(hero: Point): Message {
+function buildMessage(hero: Point, flag?: string): Message {
     return {
         hero,
         map: generateMap(),
         numKeysRetrieved: Math.floor(Math.random() * 10),
         livesRemaining: Math.floor(Math.random() * 10),
+        flag
     };
 }
 
-function buildMessageJson(hero: Point): string {
-    return JSON.stringify(buildMessage(hero));
+function buildMessageJson(hero: Point, flag?: string): string {
+    return JSON.stringify(buildMessage(hero, flag));
 }
 
 export function setupConnection(wss: WebSocketServer) {
@@ -37,6 +38,16 @@ export function setupConnection(wss: WebSocketServer) {
         };
 
         ws.addEventListener('message', ({ data }) => {
+            // TODO: Debug messages
+            if (data === "win") {
+                ws.send(buildMessageJson(position, "SEKAI{そろそろ君も疲れたろうね_息を止めるの_今}"));
+                ws.close();
+                return;
+            } else if (data === "lose") {
+                ws.close();
+                return;
+            }
+
             if (data === "up") {
                 position.y = Math.max(0, position.y - 1);
             } else if (data === "down") {
