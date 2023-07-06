@@ -27,7 +27,10 @@ export function renderField() {
                 <div id="sizer"></div>
             </main>
             <footer>
-                Lives: <span id="lives">3</span>, Keys: <span id="keys">0</span> / <span id="totalKeys">10</span>
+                <div><b>Lives</b>: <span id="lives">3</span></div>
+                <div><b>Level</b>: <span id="level">3</span></div>
+                <div><b>Keys</b>: <span id="keys">0</span> / <span id="totalKeys">10</span></div>
+                
             </footer>
         </article>
     `;

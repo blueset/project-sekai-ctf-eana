@@ -1,13 +1,12 @@
 export function animateCloud() {
   const clouds: HTMLElement[] = [];
-  debugger;
 
   const article = document.querySelector("article.title")!;
 
-  for (let i = 0; i < 20; i++) {
-    const cloud = document.createElement("span");
-    cloud.innerText = "cloud";
+  for (let i = 0; i < 21; i++) {
+    const cloud = document.createElement("img");
     cloud.className = "cloud";
+    cloud.src = `./assets/bg_cloud${(i+7)%14 + 1}.png`;
     const articleBdcr = article.getBoundingClientRect();
     const cloudBdcr = cloud.getBoundingClientRect();
     cloud.dataset.left = `${Math.random() * articleBdcr.width}`;
@@ -40,7 +39,7 @@ export function animateCloud() {
           Math.random() * (articleBdcr.height - cloudBdcr.height)
         }`;
       }
-      cloud.style.transform = `translate(${cloud.dataset.left}px, ${cloud.dataset.top}px)`;
+      cloud.style.translate = `${cloud.dataset.left}px ${cloud.dataset.top}px`;
     }
     
     if (animating) requestAnimationFrame(animate);

@@ -1,11 +1,30 @@
 :root {
-  --cell-size: 3rem;
+  --cell-size: 2rem;
 }
+
+@font-face {
+  font-family: "PixelOperator";
+  src: url(./assets/PixelOperator.ttf) format("truetype");
+}
+@font-face {
+  font-family: "PixelOperator";
+  font-weight: 600;
+  src: url(./assets/PixelOperatorHB.ttf) format("truetype");
+}
+@font-face {
+  font-family: "PixelOperator";
+  font-weight: 700;
+  src: url(./assets/PixelOperator-Bold.ttf) format("truetype");
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Inter V", "Inter", "Material Symbols Outlined";
+  font-family: "PixelOperator", "Material Symbols Outlined";
+  font-size: 16px;
+  font-smooth: never;
+  -webkit-font-smoothing: never;
 }
 
 html,
@@ -54,8 +73,9 @@ article {
   section {
     width: var(--cell-size);
     height: var(--cell-size);
-    // border: 1px solid #00000060;
     position: absolute;
+    image-rendering: pixelated;
+    background-size: cover;
 
     &::before {
       display: flex;
@@ -64,61 +84,50 @@ article {
       background-color: #c5e1a5;
       justify-content: center;
       align-items: center;
-      font-size: 1.5rem;
+      font-size: 1rem;
       font-weight: 600;
     }
-
-    &.covered::before {
-      // content: "🟩";
-      content: "";
-      background-color: #1b5e20;
+    &.covered {
+      background-image: url("./assets/grass-dark.png");
     }
-    &.c0::before {
-      content: "";
+    &.c0 {
+      background-image: url("./assets/grass.png");
     }
-    &.c1::before {
-      content: "1";
-      color: #1a237e;
+    &.c1 {
+      background-image: url("./assets/grass-1.png");
     }
-    &.c2::before {
-      content: "2";
-      color: #1b5e20;
+    &.c2 {
+      background-image: url("./assets/grass-2.png");
     }
-    &.c3::before {
-      content: "3";
-      color: #e53935;
+    &.c3 {
+      background-image: url("./assets/grass-3.png");
     }
-    &.c4::before {
-      content: "4";
-      color: #311b92;
+    &.c4 {
+      background-image: url("./assets/grass-4.png");
     }
-    &.c5::before {
-      content: "5";
-      color: #880e4f;
+    &.c5 {
+      background-image: url("./assets/grass-5.png");
     }
-    &.c6::before {
-      content: "6";
-      color: #006064;
+    &.c6 {
+      background-image: url("./assets/grass-6.png");
     }
-    &.c7::before {
-      content: "7";
-      color: #006064;
+    &.c7 {
+      background-image: url("./assets/grass-7.png");
     }
-    &.c8::before {
-      content: "8";
-      color: #757575;
+    &.c8 {
+      background-image: url("./assets/grass-8.png");
     }
-    &.bomb::before {
-      // content: "💣";
-      content: "explosion";
-      font-family: "Material Symbols Outlined";
-      color: #d32f2f;
+    &.bomb {
+      background-image: url("./assets/bomb.png"), url("./assets/grass.png");
+      background-size: 16px 16px, contain;
+      background-position: center;
+      background-repeat: no-repeat;
     }
-    &.key::before {
-      content: "key";
-      font-family: "Material Symbols Outlined";
-      animation: keyRotate 1.5s linear infinite alternate;
-      color: #ff6f00;
+    &.key {
+      background-image: url("./assets/key.png"), url("./assets/grass.png");
+      background-size: 16px 16px, contain;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
     &#player {
@@ -126,148 +135,63 @@ article {
       z-index: 1;
       transition: transform 0.1s linear;
     }
-    &#player::before {
-      text-align: right;
-      content: "↑";
-      background: #0000ff60;
-      font-size: 2.25rem;
+    &#player[data-direction="up"] {
+      background-image: url("./assets/up0.png");
     }
-    &#player[data-direction="up"]::before {
-      content: "↑";
+    &#player[data-direction="down"] {
+      background-image: url("./assets/down0.png");
     }
-    &#player[data-direction="down"]::before {
-      content: "↓";
+    &#player[data-direction="left"] {
+      background-image: url("./assets/left0.png");
     }
-    &#player[data-direction="left"]::before {
-      content: "←";
+    &#player[data-direction="right"] {
+      background-image: url("./assets/right0.png");
     }
-    &#player[data-direction="right"]::before {
-      content: "→";
+    &#player.up {
+      animation: playerUp 0.25s linear infinite alternate;
     }
-    &#player.up::before {
-      background: #ffff0060;
-      animation: playerUp 1s linear infinite alternate;
+    &#player.down {
+      animation: playerDown 0.25s linear infinite alternate;
     }
-    &#player.down::before {
-      background: #00ffff60;
-      animation: playerDown 1s linear infinite alternate;
+    &#player.left {
+      animation: playerLeft 0.25s linear infinite alternate;
     }
-    &#player.left::before {
-      background: #ff00ff60;
-      animation: playerLeft 1s linear infinite alternate;
-    }
-    &#player.right::before {
-      background: #ff000060;
-      animation: playerRight 1s linear infinite alternate;
-    }
-  }
-
-  @keyframes keyRotate {
-    0% {
-      font-weight: 100;
-    }
-    // 25% {
-    //   content: "🔑2";
-    // }
-    // 50% {
-    //   content: "🔑3";
-    // }
-    // 75% {
-    //   content: "🔑4";
-    // }
-    100% {
-      // content: "🔑4";
-      font-weight: 900;
+    &#player.right {
+      animation: playerRight 0.25s linear infinite alternate;
     }
   }
 
   @keyframes playerUp {
-    0% {
-      // content: "Pu1";
-      font-weight: 100;
+    0%, 49% {
+      background-image: url("./assets/up1.png");
     }
-    // 25% {
-    //   content: "Pu2";
-    // }
-    // 50% {
-    //   content: "Pu3";
-    // }
-    // 75% {
-    //   content: "Pu4";
-    // }
-    100% {
-      // content: "Pu4";
-      font-weight: 900;
+    50%, 100% {
+      background-image: url("./assets/up2.png");
     }
   }
   @keyframes playerDown {
-    0% {
-      font-weight: 100;
+    0%, 49% {
+      background-image: url("./assets/down1.png");
     }
-    100% {
-      font-weight: 900;
+    50%, 100% {
+      background-image: url("./assets/down2.png");
     }
-    // 0% {
-    //   content: "Pd1";
-    // }
-    // 25% {
-    //   content: "Pd2";
-    // }
-    // 50% {
-    //   content: "Pd3";
-    // }
-    // 75% {
-    //   content: "Pd4";
-    // }
-    // 100% {
-    //   content: "Pd4";
-    // }
   }
   @keyframes playerLeft {
-    0% {
-      font-weight: 100;
+    0%, 49% {
+      background-image: url("./assets/left1.png");
     }
-    100% {
-      font-weight: 900;
+    50%, 100% {
+      background-image: url("./assets/left2.png");
     }
-    // 0% {
-    //   content: "Pl1";
-    // }
-    // 25% {
-    //   content: "Pl2";
-    // }
-    // 50% {
-    //   content: "Pl3";
-    // }
-    // 75% {
-    //   content: "Pl4";
-    // }
-    // 100% {
-    //   content: "Pl4";
-    // }
   }
   @keyframes playerRight {
-    0% {
-      font-weight: 100;
+    0%, 49% {
+      background-image: url("./assets/right1.png");
     }
-    100% {
-      font-weight: 900;
+    50%, 100% {
+      background-image: url("./assets/right2.png");
     }
-    // 0% {
-    //   content: "Pr1";
-    // }
-    // 25% {
-    //   content: "Pr2";
-    // }
-    // 50% {
-    //   content: "Pr3";
-    // }
-    // 75% {
-    //   content: "Pr4";
-    // }
-    // 100% {
-    //   content: "Pr4";
-    // }
   }
 
   .noTransition {
@@ -276,9 +200,23 @@ article {
 
   footer {
     text-align: center;
-    background-color: #4E342E;
-    color: #fff;
-    padding: 0.5rem;
+    height: 50px;
+    box-sizing: border-box;
+    background-color: #c5e1a5;
+    background-image: url("./assets/Textbox-without-banner.png");
+    padding: 0.3rem 0.5rem 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: #4E342E;
+    & > div {
+      flex-grow: 1;
+      border-inline-end: 1px solid #8D6E63;
+      &:last-child {
+        border-inline-end: none;
+      }
+    }
   }
 }
 
@@ -289,28 +227,34 @@ article.title {
   position: relative;
   overflow: hidden;
 
-  span.cloud {
+  .cloud {
     font-family: "Material Symbols Outlined";
     font-variation-settings: "FILL" 1;
-    color: #ffffff80;
     font-size: 6rem;
     position: absolute;
     top: 0;
     left: 0;
     will-change: transform;
+    image-rendering: pixelated;
   }
 
   h1,
   section {
     z-index: 2;
+    font-size: 1rem;
   }
 
   section {
-    background-color: #795548;
+    background-image: url("./assets/Worn-Parchment-BG-2.png");
     border-radius: 1rem;
-    color: #fff;
-    width: min(calc(100% - 2rem), 40rem);
-    padding: 1.5rem 1rem;
+    color: #5D4037;
+    width: 465px;
+    height: 273px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 3rem;
     box-sizing: border-box;
     text-align: center;
   }
@@ -322,18 +266,20 @@ article.title {
   section button {
     display: block;
     margin: 0 auto;
-    background-color: #4dd0e1;
+    background-color: #5D4037;
     border: 0;
-    font-size: 1.25rem;
+    font-size: 1rem;
+    font-family: PixelOperator, sans-serif;
     border-radius: 0.5rem;
     padding: 0.5rem 2rem;
+    color: #EFEBE9;
 
     &:hover,
     &:focus {
-      background-color: #80deea;
+      background-color: #795548;
     }
     &:active {
-      background-color: #0097a7;
+      background-color: #3E2723;
     }
   }
 }
