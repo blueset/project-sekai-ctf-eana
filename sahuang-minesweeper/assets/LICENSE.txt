@@ -3,6 +3,11 @@ by Jayvee Enaguas
 CC0 1.0 Universal
 https://notabug.org/HarvettFox96/ttf-pixeloperator
 
+Venice Classic
+by soixantedeux
+Custom free license
+http://www.soixantedeux.co.nr/
+
 Bomb and Ammo Pickups
 by mtk
 Paid

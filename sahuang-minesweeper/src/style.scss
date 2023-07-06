@@ -16,6 +16,10 @@
   font-weight: 700;
   src: url(./assets/PixelOperator-Bold.ttf) format("truetype");
 }
+@font-face {
+  font-family: "VeniceClassic";
+  src: url(./assets/VeniceClassic.ttf) format("truetype");
+}
 
 html,
 body {
@@ -242,6 +246,21 @@ article.title {
   section {
     z-index: 2;
     font-size: 1rem;
+  }
+
+  h1 {
+    font-family: VeniceClassic, sans-serif;
+    font-weight: normal;
+    color: #FFCC80;
+    font-size: 34px;
+    text-shadow: 2px 2px 0 #BF360C, 
+      -2px 2px 0 #BF360C,
+      2px -2px 0 #BF360C,
+      -2px -2px 0 #BF360C,
+      2px 0px 0 #BF360C,
+      0px 2px 0 #BF360C,
+      -2px 0px 0 #BF360C,
+      0px -2px 0 #BF360C;
   }
 
   section {
