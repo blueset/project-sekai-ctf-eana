@@ -1,3 +1,4 @@
+/* ピクセル風を作るなら、文字を原寸大にし、画像のスケールを整数倍に限るよ。覚えてね */
 :root {
   --cell-size: 2rem;
 }
@@ -17,8 +18,17 @@
   src: url(./assets/PixelOperator-Bold.ttf) format("truetype");
 }
 @font-face {
+  font-family: "PixelOperatorMono";
+  font-weight: 700;
+  src: url(./assets/PixelOperatorMono-Bold.ttf) format("truetype");
+}
+@font-face {
   font-family: "VeniceClassic";
   src: url(./assets/VeniceClassic.ttf) format("truetype");
+}
+@font-face {
+  font-family: "AncientModernTales";
+  src: url("./assets/Ancient Modern Tales.woff") format("woff");
 }
 
 html,
@@ -208,6 +218,7 @@ article {
     box-sizing: border-box;
     background-color: #c5e1a5;
     background-image: url("./assets/Textbox-without-banner.png");
+    image-rendering: pixelated;
     padding: 0.3rem 0.5rem 0;
     display: flex;
     flex-direction: row;
@@ -249,18 +260,24 @@ article.title {
   }
 
   h1 {
-    font-family: VeniceClassic, sans-serif;
+    font-family: AncientModernTales, fantasy;
+    font-size: 33px;
     font-weight: normal;
     color: #FFCC80;
-    font-size: 34px;
-    text-shadow: 2px 2px 0 #BF360C, 
-      -2px 2px 0 #BF360C,
-      2px -2px 0 #BF360C,
+    text-shadow: 1px 1px 0 #BF360C, 
+      -2px 1px 0 #BF360C,
+      -1px 1px 0 #BF360C,
+      1px -2px 0 #BF360C,
+      1px -1px 0 #BF360C,
       -2px -2px 0 #BF360C,
-      2px 0px 0 #BF360C,
-      0px 2px 0 #BF360C,
+      -2px -2px 0 #BF360C,
+      -1px -1px 0 #BF360C,
+      1px 0px 0 #BF360C,
+      0px 1px 0 #BF360C,
       -2px 0px 0 #BF360C,
-      0px -2px 0 #BF360C;
+      -1px 0px 0 #BF360C,
+      0px -2px 0 #BF360C,
+      0px -1px 0 #BF360C;
   }
 
   section {
@@ -276,6 +293,11 @@ article.title {
     padding: 1.5rem 3rem;
     box-sizing: border-box;
     text-align: center;
+    image-rendering: pixelated;
+  }
+
+  code {
+    font-family: PixelOperatorMono, monospace;
   }
 
   section p:first-child {
