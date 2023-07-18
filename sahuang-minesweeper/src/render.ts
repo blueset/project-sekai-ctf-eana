@@ -3,7 +3,35 @@ import type { Message, Point, Tile } from "./ws/types";
 let main: HTMLElement;
 let player: HTMLElement;
 
-function populateField(map: Tile[][]) {
+function moveTo(x: number, y: number, connection: WebSocket, getPlayerPos: () => Point) {
+  const playerPos = getPlayerPos();
+  const deltaX = x - playerPos.x;
+  const deltaY = y - playerPos.y;
+  const steps = [];
+  if (deltaX > 0) {
+    for (let i = 0; i < deltaX; i++) {
+      steps.push("right");
+    }
+  } else if (deltaX < 0) {
+    for (let i = 0; i < -deltaX; i++) {
+      steps.push("left");
+    }
+  }
+
+  if (deltaY > 0) {
+    for (let i = 0; i < deltaY; i++) {
+      steps.push("down");
+    }
+  } else if (deltaY < 0) {
+    for (let i = 0; i < -deltaY; i++) {
+      steps.push("up");
+    }
+  }
+
+  connection.send(steps.join("\n"));
+}
+
+function populateField(map: Tile[][], connection: WebSocket, getPlayerPos: () => Point) {
   const width = map[0].length, height = map.length;
   const sizer: HTMLDivElement = main.querySelector("#sizer")!;
   sizer.style.width = `calc(var(--cell-size) * ${width})`;
@@ -17,6 +45,10 @@ function populateField(map: Tile[][]) {
         cell.style.top = `calc(var(--cell-size) * ${i})`;
         cell.style.left = `calc(var(--cell-size) * ${j})`;
         main.appendChild(cell);
+        cell.addEventListener("click", () => {
+          console.log(`Moving to ${j}, ${i}`);
+          moveTo(j, i, connection, getPlayerPos);
+        });
       }
       cell.className = map[i][j];
     }
@@ -43,7 +75,7 @@ function startPlayerAnimation(direction: Direction) {
 }
 
 function registerListeners(connection: WebSocket) {
-  document.addEventListener("keydown", (evt) => {
+  const keydown = (evt: KeyboardEvent) => {
     if (evt.key === "ArrowUp") {
       connection.send("up");
     } else if (evt.key === "ArrowDown") {
@@ -53,14 +85,8 @@ function registerListeners(connection: WebSocket) {
     } else if (evt.key === "ArrowRight") {
       connection.send("right");
     }
-
-    // TODO: Debug messages
-    if (evt.key === "w") {
-      connection.send("win");
-    } else if (evt.key === "l") {
-      connection.send("lose");
-    }
-  });
+  };
+  document.addEventListener("keydown", keydown);
 
   player.addEventListener("transitionend", () => {
     player.scrollIntoView({
@@ -69,6 +95,10 @@ function registerListeners(connection: WebSocket) {
       inline: "center",
     });
   });
+
+  return () => {
+    document.removeEventListener("keydown", keydown);
+  }
 }
 
 export const setupWithWebSocket = (winCallback: (flag: string) => void, loseCallback: () => void) => {
@@ -79,6 +109,7 @@ export const setupWithWebSocket = (winCallback: (flag: string) => void, loseCall
   let hasWon = false;
 
   let playerPos: Point | null = null;
+  const getPlayerPos = () => playerPos!;
   const connection = new WebSocket(
     `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/socket`
   );
@@ -92,7 +123,7 @@ export const setupWithWebSocket = (winCallback: (flag: string) => void, loseCall
       winCallback(data.flag);
       return;
     }
-    populateField(data.map);
+    populateField(data.map, connection, getPlayerPos);
     if (playerPos) {
       movePlayer(data.hero.x, data.hero.y);
       if (data.hero.x === playerPos.x && data.hero.y < playerPos.y) {
@@ -118,10 +149,26 @@ export const setupWithWebSocket = (winCallback: (flag: string) => void, loseCall
     lives.textContent = data.livesRemaining.toString();
     keys.textContent = data.numKeysRetrieved.toString();
   });
+  const clearListeners = registerListeners(connection);
   connection.addEventListener("close", () => {
+    clearInterval(countdown);
+    clearListeners();
     if (!hasWon) {
       loseCallback();
     }
   });
-  registerListeners(connection);
+
+  // client side timer
+  let timeLeft: number = 60;
+  const timer = document.getElementById("timer")!;
+  const countdown = setInterval(() => {
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      loseCallback();
+      connection.close();
+    } else {
+      timer.textContent = timeLeft.toString();
+      timeLeft--;
+    }
+  }, 1000);
 };

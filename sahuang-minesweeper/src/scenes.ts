@@ -1,12 +1,12 @@
-import { animateCloud } from './clouds.ts';
-import { setupWithWebSocket } from './render.ts'
+import { animateCloud } from './clouds';
+import { setupWithWebSocket } from './render'
 
 export function renderTitle() {
     document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <article class="title">
-            <h1>Minesweeper Adventure</h1>
+            <h1>Mikusweeper</h1>
             <section>
-                <p>Conubia curabitur metus integer cubilia tempor lorem facilisis mattis rutrum euismod, justo bibendum orci ultrices tincidunt odio nulla commodo.</p>
+                <p>Miku has lost the keys to her kingdom in the treacherous wilderness. The fate now rests in your hands. Help Miku locate the keys and reclaim her throne in time!</p>
                 <button id="start">Start</button>
             </section>
         </article>
@@ -28,9 +28,8 @@ export function renderField() {
             </main>
             <footer>
                 <div><b>Lives</b>: <span id="lives">3</span></div>
-                <div><b>Level</b>: <span id="level">3</span></div>
-                <div><b>Keys</b>: <span id="keys">0</span> / <span id="totalKeys">10</span></div>
-                
+                <div><b>Timer</b>: <span id="timer">60</span></div>
+                <div><b>Keys</b>: <span id="keys">0</span> / <span id="totalKeys">39</span></div>
             </footer>
         </article>
     `;
@@ -43,6 +42,7 @@ export function renderWin(flag: string) {
         <article class="title">
             <h1>You win!</h1>
             <section>
+                <p>😊 Great job! Miku Kingdom is finally saved 😊</p>
                 <p>Flag: <code>${flag}</code></p>
             </section>
         </article>
@@ -55,7 +55,7 @@ export function renderLose() {
     <article class="title">
         <h1>You lose.</h1>
         <section>
-            <p>Conubia curabitur metus integer cubilia tempor lorem facilisis mattis rutrum euismod, justo bibendum orci ultrices tincidunt odio nulla commodo.</p>
+            <p>💣 Better luck next time! 💣</p>
             <button id="restart">Restart</button>
         </section>
     </article>
