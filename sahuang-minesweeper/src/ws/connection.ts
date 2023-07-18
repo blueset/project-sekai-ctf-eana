@@ -79,10 +79,14 @@ export function setupConnection(wss: WebSocketServer) {
                         gameState.livesRemaining -= 1
                     }
                 }
+
+                if (isWin || gameState.livesRemaining === 0) {
+                    break;
+                }
             }
 
             var payload = buildMessageJson(gameState, isWin ? "SEKAI{M1ku_K1ngd0m_h4s_b33n_54v3d_OwO<3}" : undefined)
-
+            // console.log(payload)
             ws.send(payload)
             if (isWin || gameState.livesRemaining === 0) {
                 ws.close()
