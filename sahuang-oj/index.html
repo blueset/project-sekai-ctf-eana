@@ -251,49 +251,107 @@
             language.disabled = false;
         }
 
-        submit.addEventListener("click", function(evt) {
+        submit.addEventListener("click", function (evt) {
             evt.preventDefault();
-            submit.disabled = true;
-            submit.classList.remove("bg-cyan-700");
-            submit.classList.add("bg-zinc-700");
-            submit.classList.remove("hover:bg-cyan-600");
-            submit.innerHTML = `<span class="iconify inline-block" data-icon="line-md:loading-loop"></span>`;
-            challenge.disabled = true;
-            language.disabled = true;
+            grecaptcha.ready(async function () {
+                try {
+                    const token = await grecaptcha.execute('6LeJp60mAAAAAPhxf4z1P3AylIv3ZzpjolFbhc8B', { action: 'submit' })
+                    // Submit to backend server
+                    submit.disabled = true;
+                    submit.classList.remove("bg-cyan-700");
+                    submit.classList.add("bg-zinc-700");
+                    submit.classList.remove("hover:bg-cyan-600");
+                    submit.innerHTML = `<span class="iconify inline-block" data-icon="line-md:loading-loop"></span>`;
+                    challenge.disabled = true;
+                    language.disabled = true;
 
-            fetch("/submit", {
-                method: "POST",
-                body: JSON.stringify({
-                    language: language.value,
-                    code: window.editor.getValue(),
-                    challengeId: window.state.challenge,
-                }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-            .then((resp) => resp.json())
-            .then((data) => {
-                console.log(data);
-                var subs = window.state.challenges[window.state.challenge].submissions;
-                var section = generateSubmission(data, subs.length);
-                submissions.appendChild(section);
-                refreshTooltip();
-                subs.push(data);
-                localStorage.setItem('state', JSON.stringify(window.state));
-                onFinish();
-            })
-            .catch(() => {
-                onFinish();
+                    const resp = await fetch("/submit", {
+                        method: "POST",
+                        body: JSON.stringify({
+                            language: language.value,
+                            code: window.editor.getValue(),
+                            challengeId: window.state.challenge,
+                            token: token, // to be verified by backend
+                        }),
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    });
+                    if (!resp.ok) {
+                        throw resp;
+                    }
+                    const data = resp.json();
+
+                    var subs = window.state.challenges[window.state.challenge].submissions;
+                    var section = generateSubmission(data, subs.length);
+                    submissions.appendChild(section);
+                    refreshTooltip();
+                    subs.push(data);
+                    localStorage.setItem('state', JSON.stringify(window.state));
+                    onFinish();
+                } catch (err) {
+                    if (err && err.status === 429) {
+                        submit.disabled = true;
+                        submit.innerHTML = "Too many submissions";
+                        submit.classList.add("cooling-down");
+                        const animationEndListener = function () {
+                            submit.classList.remove("cooling-down");
+                            onFinish();
+                            submit.removeEventListener("animationend", animationEndListener);
+                        };
+                        submit.addEventListener("animationend", animationEndListener);
+                    } else {
+                        console.error(err);
+                        onFinish();
+                    }
+                }
             });
         });
 
         refreshTooltip();
+
+        const style = document.createElement('style');
+        style.type = 'text/css';
+        if (typeof window.CSS.registerProperty !== 'undefined') {
+            style.innerHTML = `
+                @property --percentage {
+                    initial-value: 0%;
+                    inherits: false;
+                    syntax: "<percentage>";
+                }
+  
+                .cooling-down {
+                    border-image-source: conic-gradient(transparent var(--percentage), rgba(255, 255, 255, 0.4) var(--percentage));
+                }
+
+                @keyframes cooling-down {
+                    to {
+                        --percentage: 100%;
+                    }
+                }
+  
+            `;
+        } else {
+            var keyFrames = "@keyframes cooling-down {";
+            const steps = 100;
+            for (var i = 0; i <= steps; i++) {
+                <!-- keyFrames += `${i / steps * 100}% { background-image: conic-gradient(transparent ${(i) / steps * 100}%, rgba(255, 255, 255, 0.2) ${(i) / steps * 100}%); }`; -->
+                keyFrames += `${i / steps * 100}% { border-image-source: conic-gradient(transparent ${(i) / steps * 100}%, rgba(255, 255, 255, 0.2) ${(i) / steps * 100}%); }`;
+            }
+            keyFrames += "}";
+            style.innerHTML = keyFrames;
+        }
+        document.getElementsByTagName('head')[0].appendChild(style);
     </script>
     <style>
         code, pre {
             font-family: "Recursive", "Rec Mono Casual", "Recursive Mono", "Cascadia Code PL", "Cascadia Code", monospace;
             font-variation-settings: "dlig" 1, "ss08" 1, "ss09" 1, "CASL" 1, "MONO" 1;
+        }
+        .cooling-down {
+            animation: cooling-down 30s linear;
+            border-image-slice: 1;
+            border-width: 5px;
         }
     </style>
 </body>
