@@ -37,6 +37,7 @@ In case they would need to use the author names anywhere, I would go with *pamLE
 * [sahuang-nonogram](https://codepen.io/blueset/pen/NWyZzwp)
 * [bwjy-bottlepoem](./bwjy-bottlepoem)
 * [rik-issues](./rik-issues)
+* [hfz-spawner](./hfz-spawner)
 
 ## Stuff I did during playtest
 

@@ -1,0 +1,98 @@
+.listItem.instanceItem {
+
+    .instanceName {
+        font-size: 1.25rem;
+        font-weight: 600;
+
+        .instanceProto {
+            margin-left: 0.25rem;
+            display: inline-block;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+            padding: 0.15rem 0.3rem;
+            vertical-align: 0.2rem;
+            border-radius: 0.25rem;
+            text-transform: uppercase;
+            color: white;
+            background-color: $accent-color;
+        }
+    }
+
+    .listItemNumber {
+        width: auto;
+        padding: 0 0.25em;
+    }
+
+    .instanceLogo {
+        height: 1.5em;
+        width: auto;
+    }
+
+    .copyableConnection {
+        font-size: 1rem;
+        padding-left: 0.5rem;
+        display: flex;
+    }
+
+    .connectionValue {
+        flex-grow: 1;
+        word-break: break-all;
+    }
+
+    .instanceInfo {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        align-items: center;
+        gap: 0.5rem;
+        margin-right: 1em;
+    }
+
+    .countdown {
+        max-width: 15em;
+        position: relative;
+        text-align: center;
+
+        .back, .front {
+            border-radius: 0.5rem;
+            border: 2px solid $countdown-color;
+            font-weight: 600;
+            padding: 0.25rem;
+        }
+        .back {
+            color: $countdown-color;
+        }
+        .front {
+            inset: 0;
+            position: absolute;
+            color: white;
+            background-color: $countdown-color;
+            clip-path: inset(0 var(--progress-percentage, 40%) 0 0);
+            -webkit-clip-path: inset(0 var(--progress-percentage, 40%) 0 0);
+            transition: clip-path 1s linear;
+        }
+    }
+
+    @include media-sm {
+        flex-direction: column;
+
+        .listItemNumber, .listItemDetails {
+            align-self: stretch;
+        }
+        .listItemNumber {
+            justify-content: flex-start;
+        }
+
+        .listItemDetails {
+            flex-basis: auto;
+            min-height: 0;
+            .instanceInfo {
+                grid-template-columns: 1fr;
+                margin-right: 0;
+            }
+        }
+
+        .countdown {
+            max-width: unset;
+        }
+    }
+}

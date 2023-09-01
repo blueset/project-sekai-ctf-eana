@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SekaiCTF Instance Launcher</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" type="text/css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+<body class="bg-gray-900 text-white">
+
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-semibold mb-4">SekaiCTF Instance Launcher</h1>
+
+        <p class="mb-4">All challenge instances have a duration of 5 minutes. You may initiate a new instance only after the previous one has stopped.</p>
+        <p class="mb-4">Every instance is associated with your team's CTFd account. You must be logged in to access the launcher.</p>
+
+        <div class="grid gap-4">
+            {% for chal in chals %}
+            <div class="bg-gray-800 p-4 rounded">
+                <h2 class="text-xl font-semibold mb-2">{{ chal['category'] }}/{{ chal['name'] }}</h2>
+                {% if chal.get('running') %}
+                <div class="mt-2">
+                    <p class="mb-2">Your instance is running at <span class="bg-gray-700 p-1 rounded-md cursor-pointer relative" id="highlightedText" onclick="copyText(this)">{{ chal['proto'] }}://{{ chal['host'] }}:{{ chal['port'] }}</span></p>
+                    <p class="mb-2">{% if chal['password'] %}Password: <span class="bg-gray-200 px-2 py-1 rounded text-sm font-mono text-gray-800">{{ chal['password'] }}</span>{% endif %}</p>
+                </div>
+                <div remaining="{{ chal['remaining'] }}" class="timer text-white"></div>
+                {% else %}
+                <button class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded" challenge_id="{{ chal['id'] }}" onclick="handleButtonClick(this)">Launch Instance</button>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <br><br>
+    <div class="g-recaptcha flex justify-center" data-sitekey="6LcfunchAAAAACqWkEiNSjpisc4A4bihYdj2fRIC" data-callback="setRecaptchaResponse"></div>
+    <div id="g-recaptcha-response" value="" hidden>
+    </div>
+
+    <style>
+        .disabled-button {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+
+        .disabled-button:hover {
+            background-color: #999;
+        }
+        
+        .cursor-pointer:hover {
+            color: #87cefa;
+        }
+    </style>
+    <script>
+        function setRecaptchaResponse(response) {
+            document.getElementById("g-recaptcha-response").value = response;
+        }
+
+        function copyText(textElement) {
+            const textToCopy = textElement.innerText;
+            const tempInput = document.createElement('input');
+            tempInput.value = textToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            alert("Copied to the clipbaord");
+        }
+
+        function updateTimer(duration, timerElement) {
+            const minutes = Math.floor(duration / 60);
+            const seconds = duration % 60;
+
+            timerElement.textContent = `Stopping in ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            if (duration > 0) {
+                duration--;
+                setTimeout(() => updateTimer(duration, timerElement), 1000);
+            } else {
+                timerElement.textContent = "Instance stopped. Refresh to launch a new instance.";
+            }
+        }
+
+        async function handleButtonClick(button) {
+            challenge_id = button.getAttribute("challenge_id");
+            token = document.getElementById("g-recaptcha-response").value;
+            try {
+                const response = await fetch("/launcher", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        'challenge_id': challenge_id,
+                        'g-recaptcha-response': token
+                    }),
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    button.classList.add("disabled-button");
+                    button.disabled = true;
+                    alert(data.msg);
+                } else {
+                    alert(data.msg);
+                    location.reload();
+                }
+            } catch (e) {}
+        }
+
+        const timers = document.getElementsByClassName("timer");
+        for (i = 0; i < timers.length; i++) {
+            updateTimer(timers[i].getAttribute("remaining"), timers[i]);
+        }
+    </script>
+</body>
+
+</html>
